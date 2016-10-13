@@ -90,3 +90,6 @@ ENV/
 
 # Bin folder
 bin
+
+# Intellij project files
+.idea
