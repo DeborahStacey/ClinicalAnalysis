@@ -9,7 +9,7 @@
 
 
 
-##### Directory: ClinicalAnalysisEngine/socket_example/ ---------------------------------------------------------------------------------------------------------------------
+##### Directory: ClinicalAnalysisEngine/socket_example ---------------------------------------------------------------------------------------------------------------------
 Running: client on local machine, and connecting to server in the cloud:
 	1. Run client.py ($ python3 client.py)
 	2. Type a message into the client.py's prompt, and the message will be sent using sockets to the server.py script,
