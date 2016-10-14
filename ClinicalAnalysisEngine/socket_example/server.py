@@ -22,7 +22,7 @@ while True:
 
         print("Client Says: " + msg)
 
-        msgToSend = "The server says you sent: " + msg 
+        msgToSend = host + "you sent: " + msg 
         conn.sendall(msgToSend.encode('utf-8'))
 
     except socket.error:
