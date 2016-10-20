@@ -28,7 +28,7 @@ def ProcessRequest(jsonRequest):
     elif 'animals' not in loadedJson:
     	return error_message.Return(11, "Invalid json request, missing key: animals")
     elif 'field' not in loadedJson:
-    	return error_message.Return(12, "Invalid json request, missing key: fields")
+    	return error_message.Return(12, "Invalid json request, missing key: field")
 
 
     ###

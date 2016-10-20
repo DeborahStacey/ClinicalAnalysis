@@ -3,8 +3,8 @@ import json
 
 
 def Return(code, message):
-    message = {}
-    message["code"] = code
-    message["message"] = message
-    message["result"] = "error"
-    return json.dumps(message)
+    jsonMsg = {}
+    jsonMsg["result"] = "error"
+    jsonMsg["code"] = code
+    jsonMsg["message"] = message
+    return json.dumps(jsonMsg)

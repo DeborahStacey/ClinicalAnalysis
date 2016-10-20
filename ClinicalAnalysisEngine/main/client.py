@@ -6,7 +6,11 @@ import sys
 host = '104.196.166.63'        # IP of the server
 port = 12345                   # The same port as used by the server
 
-
+#Check python version running this script
+version = sys.version.split(".")[0]
+if(version == "2"):
+    print("\nPlease run this script using python3,\n    quiting...\n")
+    quit()
 
 
 argCount = len(sys.argv) - 1 #Number of CL args not counting program name

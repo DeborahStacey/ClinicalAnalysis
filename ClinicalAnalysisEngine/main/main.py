@@ -3,11 +3,19 @@
 
 import socket
 import process_request
+import sys
 
 
 host = ''        # Symbolic name meaning all available interfaces
 port = 12345     # Arbitrary non-privileged port
 
+
+
+#Check python version running this script
+version = sys.version.split(".")[0]
+if(version == "2"):
+    print("\nPlease run this script using python3,\n    quiting...\n")
+    quit() 
 
 #Setup the socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
