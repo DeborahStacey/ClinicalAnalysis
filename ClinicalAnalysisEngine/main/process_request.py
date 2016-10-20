@@ -1,6 +1,7 @@
 ## process_request.py
 # Primary Owner: Andrew Downie
 
+import error_message
 import json
 
 #####
@@ -16,18 +17,18 @@ def ProcessRequest(jsonRequest):
     try:
         loadedJson = json.loads(jsonRequest)
     except:
-        return("Not valid json request, please check formatting")
+    	return error_message.Return(1, "Invalid json request, improperly formatted json")
 
 
     ###
     ### Check that required keys are present
     ###
     if 'operation' not in loadedJson:
-        return "Not valid json request, missing key: operation"
+    	return error_message.Return(10, "Invalid json request, missing key: operation")
     elif 'animals' not in loadedJson:
-        return "Not valid json request, missing key: animals"
+    	return error_message.Return(11, "Invalid json request, missing key: animals")
     elif 'field' not in loadedJson:
-        return "Not valid json request, missing key: fields"
+    	return error_message.Return(12, "Invalid json request, missing key: fields")
 
 
     ###
