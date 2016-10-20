@@ -6,17 +6,17 @@ DATE: Oct 21st, 2016
 
 #### Description:
 It is now possible to send a json request with three required key parameters: "operation", "animals", and "field". If "weight" and/or "height" is sent as values of "field", then mock data for "weight" and/or "height" data will be sent back. The next step is to replace the mock data, with actual data grabbed from the database.
-####Google cloud instance:
+####Connect to Google cloud instance:
 Parameter based input: `$ python3 fieldPoke.py`
 
-Freeform: `$ python3 client.py`
+Freeform user input: `$ python3 client.py`
 
-####Localhost:
+####Run entirely locally:
 Start the clinical analysis engine locally: `$ ./startServer.sh`
 
 Stop the local clinical analysis engine: `$ ./stopServer.sh`
 
-Run client (freeform input): `$ python3 client.py localhost`
+Run client (freeform user input): `$ python3 client.py localhost`
 
 Run client (parameter based input): `$ python3 fieldPoke.py localhost`
 
