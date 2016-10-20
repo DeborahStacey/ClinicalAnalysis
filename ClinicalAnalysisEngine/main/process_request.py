@@ -4,6 +4,10 @@
 import json
 
 def ProcessRequest(jsonRequest):
-	loadedJson = json.loads(jsonRequest)
-	print(loadedJson)
-	return loadedJson['request']
+	loadedJson = ""
+
+	try:
+	    loadedJson = json.loads(jsonRequest)
+	    return loadedJson['operation']
+	except:
+            return("Not valid json request, missing operation key")
