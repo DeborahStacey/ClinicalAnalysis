@@ -44,8 +44,8 @@ while True:
 
 
     except socket.error:
-        print("Error Occured.")
-        break
+        print("Error Occured. Did a client connect but not send anything?")
+        continue 
 
 conn.close()
 
