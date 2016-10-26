@@ -4,27 +4,53 @@
 import socket
 import process_request
 import sys
+import os
 
 
 host = ''        # Symbolic name meaning all available interfaces
 port = 12345     # Arbitrary non-privileged port
 
 
-
-#Check python version running this script
+###
+### Check python version running this script
+###
 version = sys.version.split(".")[0]
 if(version == "2"):
     print("\nPlease run this script using python3,\n    quiting...\n")
     quit() 
 
-#Setup the socket
+
+###
+### Check command lines args
+###
+if(len(sys.argv) >= 2): #A port has been provided
+    try:
+        port = int(sys.argv[1])
+    except:
+        print("Given port (arg 1), was not a proper port/integer")
+
+
+
+###
+### Save this sessions settings to text file
+###
+f = open("pidport.conf", 'w')
+f.write(str(os.getpid()) + "," + str(port))
+f.close()
+
+
+
+###
+### Setup the socket
+###
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 
 print("Starting server at: " + host + ":" + str(port))
 
-
-#Main program loop (wait for a request)
+###
+### Main program loop (wait for a request)
+###
 while True:
     s.listen(1)
     conn, addr = s.accept()
@@ -38,7 +64,6 @@ while True:
 
 
         data = rawData.decode('utf-8')
-        #requestResult = process_request.ProcessRequest('{"request": "fart"}') 
         requestResult = process_request.ProcessRequest(data) 
         conn.sendall(requestResult.encode('utf-8'))
 
