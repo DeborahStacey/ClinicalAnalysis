@@ -17,8 +17,8 @@ if(version == "2"):
 SIGKILL = 9 
 
 ###
-### Save this sessions settings to text file
-###
+### Load this sessions settings from pidport.conf 
+###                    (that way we can kill the main.py script running local to this folder, but leave the other main.py's running on the same computer on other ports)
 with open("pidport.conf") as f:
     for line in f:
         processPID = line.split(",")[0]

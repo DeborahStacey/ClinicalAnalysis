@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 main.py > log.server &
+python3 main.py > log.main &

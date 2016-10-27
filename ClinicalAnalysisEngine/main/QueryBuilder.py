@@ -36,7 +36,8 @@ def build_query(queryList):
 
     sqlWhere += ")"
 
-    print (sqlWhere)
+    #print (sqlWhere)
+    return sqlWhere
 
 
 def parameterBuilder(node):

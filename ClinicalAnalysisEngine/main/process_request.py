@@ -3,7 +3,7 @@
 
 import error_message
 import json
-import DeconstructJson
+import QueryBuilder
 
 #####
 ##### Process Request
@@ -41,21 +41,53 @@ def ProcessRequest(jsonRequest):
 
 
     ###
-    ### Return mock data related to request fields
+    ### Parse Json from tree to flat list
     ###
     jsonOutput = {}
 
-    if 'weight' in fields:
-        jsonOutput['weight'] = [10, 17, 22]
+    allLeaves = []
+    ParseJsonBranch(fields, "", allLeaves)
+    print(str(allLeaves))
 
-    if 'height' in fields:
-        jsonOutput['height'] = [12, 20, 4]
+    try:
+        return QueryBuilder.build_query(allLeaves)
+    except Exception as e:
+        print(">>ERROR: " + str(e) + "\n")
+
+    return "There was an error."
 
 
 
-    #jsonOutput["TEST"] = DeconstructJson.deconstruct()
-    jsonOutput["TEST"] = DeconstructJson.deconstruct(json.loads('{ "field": { "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] } }'))
+def ParseJsonBranch(jsonRequest, nodeOperators, allLeaves):
+    try:
+        if(type(jsonRequest) == type(dict())):
+            for key, val in jsonRequest.items():
+                if(str(key)[0] == "$"):
+                    nodeOperators += str(key) + "."
+                    ParseJsonBranch(val, nodeOperators, allLeaves)
+                else:
+                    allLeaves.append(PackageJsonLeaf(nodeOperators, jsonRequest))
+                    return
+        elif(type(jsonRequest) == type(list())):
+            listIndex = 0
+            for item in jsonRequest:
+                ParseJsonBranch(item, nodeOperators + str(listIndex) + ".", allLeaves)
+                listIndex = listIndex + 1
 
+    except Exception as e:
+        print(">>ERROR: " + str(e) + "\n")
+        return
 
-    #return str(fields)
-    return json.dumps(jsonOutput)
+def PackageJsonLeaf(nodeOperators, jsonLeaf):
+    deconstructedLine = []
+
+    curNode = ".".join(nodeOperators.split(".")[:-2])
+
+    try:
+        for topKey, topVal in jsonLeaf.items():
+            for botKey, botVal in topVal.items():
+                deconstructedLine = [curNode, topKey, botKey, botVal]
+    except Exception as e:
+        print(">>ERROR: " + str(e) + "\n")
+
+    return deconstructedLine
