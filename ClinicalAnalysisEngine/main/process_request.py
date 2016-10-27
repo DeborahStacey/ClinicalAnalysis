@@ -53,7 +53,8 @@ def ProcessRequest(jsonRequest):
 
 
 
-    jsonOutput["TEST"] = DeconstructJson.deconstruct()
+    #jsonOutput["TEST"] = DeconstructJson.deconstruct()
+    jsonOutput["TEST"] = DeconstructJson.deconstruct(json.loads('{ "field": { "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] } }'))
 
 
     #return str(fields)
