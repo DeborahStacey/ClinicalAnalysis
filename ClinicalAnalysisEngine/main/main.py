@@ -17,7 +17,7 @@ port = 12345     # Arbitrary non-privileged port
 version = sys.version.split(".")[0]
 if(version == "2"):
     print("\nPlease run this script using python3,\n    quiting...\n")
-    quit() 
+    quit()
 
 
 ###
@@ -58,22 +58,18 @@ while True:
 
     try:
         rawData = conn.recv(1024)
-        if not rawData: continue 
+        if not rawData: continue
 
-	
+
 
 
         data = rawData.decode('utf-8')
-        requestResult = process_request.ProcessRequest(data) 
+        requestResult = process_request.ProcessRequest(data)
         conn.sendall(requestResult.encode('utf-8'))
 
 
     except socket.error:
         print("Error Occured. Did a client connect but not send anything?")
-        continue 
+        continue
 
 conn.close()
-
-
-
-

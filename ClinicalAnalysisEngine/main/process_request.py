@@ -3,6 +3,7 @@
 
 import error_message
 import json
+import DeconstructJson
 
 #####
 ##### Process Request
@@ -32,18 +33,18 @@ def ProcessRequest(jsonRequest):
 
 
     ###
-    ### Collect values of required keys 
+    ### Collect values of required keys
     ###
     operation = loadedJson['operation']
     animals = loadedJson['animals']
-    fields = loadedJson['field']  
+    fields = loadedJson['field']
 
 
     ###
     ### Return mock data related to request fields
     ###
     jsonOutput = {}
-    
+
     if 'weight' in fields:
         jsonOutput['weight'] = [10, 17, 22]
 
@@ -51,7 +52,9 @@ def ProcessRequest(jsonRequest):
         jsonOutput['height'] = [12, 20, 4]
 
 
+
+    jsonOutput["TEST"] = DeconstructJson.deconstruct()
+
+
     #return str(fields)
     return json.dumps(jsonOutput)
-
-    
