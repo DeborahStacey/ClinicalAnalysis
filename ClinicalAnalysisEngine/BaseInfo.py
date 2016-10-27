@@ -1,25 +1,31 @@
 ## Class: Animal
 # Primary Owner: Andrew Downie
-class BaseInfo(object):
 
-    name = "Base Name Value"
-    species = "Base Species Value"
-    breed = "Base Breed Value"
-    gender = "Base Gender Value"
-    colour = "Base Colour Value"
-    age = "Base Age Value"
-    sex = "Base Sex Value"
-    weight = "Base Weight Value"
-    height = "Base Height Value"
-    length = "Base Length Value"
-    owner_id = "Base owner id"
-    animal_id = "Base animal id"
-    microchip = "Base microchip"
-    data_of_birth = "Base birthdate"
-
-    def __init__(self, name=None, species=None, breed=None, gender=None, colour=None, age=None, sex=None, weight=None, height=None, length=None):
-        self.name = name
+# This class needs to match the database schema
 
 
-    def __str__(self):
-        return self.name
+class BaseInfo(dict):
+
+
+    ownerid = -1
+    petid = -1
+    name = "Fake Name"
+    breedid = -1
+    gender = -1
+    microchip = False
+    fitcat = False
+    dateofbirth = 0
+    weight = -1.0
+    height = -1.0
+    length = -1.0
+    dateofdeath = 0
+    reasonfordeath = "unknown"
+    lastupdated = 0
+    dateadded = 0
+
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+
+
