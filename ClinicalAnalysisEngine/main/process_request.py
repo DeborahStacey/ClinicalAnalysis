@@ -47,7 +47,7 @@ def ProcessRequest(jsonRequest):
 
     allLeaves = []
     ParseJsonBranch(fields, "", allLeaves)
-    print(str(allLeaves))
+    #print("All leaves:\n" + str(allLeaves))####################################
 
     try:
         return QueryBuilder.build_query(allLeaves)

@@ -74,7 +74,7 @@ def valueConverter(node):
     elif(isinstance(val,float)):
         return str(val)
 
-    return "Error: Invalid value type"
+    return "Error: Invalid value type(" + str(val) + ")"
 
 def lastNodeOperator(node):
     return " " + node[nodeOperators].split(".")[-1][1:].upper() + " "

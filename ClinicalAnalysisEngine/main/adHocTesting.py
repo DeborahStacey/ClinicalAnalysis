@@ -6,11 +6,11 @@ import sys
 #####
 jsonFront = '{"operation": "operation-here", "animals": "animal-here", "field": ['
 jsonBack = ']}'
+
 availableTests = {
     'simple1': '{"age":{"gt":5}}',
-
-    'layered1':'{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] }'
-
+    'layered1':'{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] }',
+    'broken1': '{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }] }'
 }
 
 
