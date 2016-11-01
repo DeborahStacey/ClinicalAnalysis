@@ -40,54 +40,69 @@ def ProcessRequest(jsonRequest):
     fields = loadedJson['field']
 
 
-    ###
-    ### Parse Json from tree to flat list
-    ###
-    jsonOutput = {}
-
-    allLeaves = []
-    ParseJsonBranch(fields, "", allLeaves)
-    #print("All leaves:\n" + str(allLeaves))####################################
+    sqlQuery = ParseJsonBranch(fields, None)
+    print(sqlQuery)
+    return "Premature exit"
 
     try:
         return QueryBuilder.build_query(allLeaves)
     except Exception as e:
-        print(">>ERROR: " + str(e) + "\n")
+        print(">>ERROR1: " + str(e) + "\n")
 
     return "There was an error."
 
 
-
-def ParseJsonBranch(jsonRequest, nodeOperators, allLeaves):
+def ParseJsonBranch(jsonBranch, lastOperator):
     try:
-        if(type(jsonRequest) == type(dict())):
-            for key, val in jsonRequest.items():
+        if(type(jsonBranch) == type(dict())):
+            for key, val in jsonBranch.items():
                 if(str(key)[0] == "$"):
-                    nodeOperators += str(key) + "."
-                    ParseJsonBranch(val, nodeOperators, allLeaves)
+                    print(str(key)[1:])
+                    return ParseJsonBranch(val, str(key)[1:])
                 else:
-                    allLeaves.append(PackageJsonLeaf(nodeOperators, jsonRequest))
-                    return
-        elif(type(jsonRequest) == type(list())):
-            listIndex = 0
-            for item in jsonRequest:
-                ParseJsonBranch(item, nodeOperators + str(listIndex) + ".", allLeaves)
-                listIndex = listIndex + 1
+                    return JsonToSqlParm(jsonBranch)
+        elif(type(jsonBranch) == type(list())):
+            sqlPiece = "("
+            for i in range(0, len(jsonBranch)):
+                sqlPiece += ParseJsonBranch(jsonBranch[i], lastOperator)
+                if(i < len(jsonBranch)-1):
+                    sqlPiece += " " + str(lastOperator) + " "
+
+
+            sqlPiece += ")"
+            return sqlPiece
 
     except Exception as e:
-        print(">>ERROR: " + str(e) + "\n")
+        print(">>ERROR2: " + str(e) + "\n")
         return
 
-def PackageJsonLeaf(nodeOperators, jsonLeaf):
-    deconstructedLine = []
 
-    curNode = ".".join(nodeOperators.split(".")[:-2])
 
+def JsonToSqlParm(jsonLeaf):
     try:
-        for topKey, topVal in jsonLeaf.items():
-            for botKey, botVal in topVal.items():
-                deconstructedLine = [curNode, topKey, botKey, botVal]
+        for field, jsonKeyVal in jsonLeaf.items():
+            for operator, value in jsonKeyVal.items():
+                print(str(operator) + " " + str(value))
+                return str(field) + " " + operationConverter(operator) + " " + str(value)
     except Exception as e:
-        print(">>ERROR: " + str(e) + "\n")
+        print(">>ERROR3: " + str(e) + "\n")
 
-    return deconstructedLine
+
+
+def operationConverter(operation):
+    try:
+        if(operation == "lt"):
+            return "<"
+        elif (operation == "gt"):
+            return ">"
+        elif (operation == "eq"):
+            return "="
+        elif (operation == "ne"):
+            return "!="
+        elif (operation == "lte"):
+            return "<="
+        elif (operation == "gte"):
+            return ">="
+        return "Error4: Invalid Operator"
+    except Exception as e:
+        print(">>ERROR5: " + str(e) + "\n")
