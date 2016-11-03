@@ -65,6 +65,8 @@ while True:
 
         data = rawData.decode('utf-8')
         sqlParms = jsonToSqlParms.JsonToSqlParms(data)
+        sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms)
+        
         conn.sendall(sqlParms.encode('utf-8'))
 
 
