@@ -3,6 +3,7 @@ import socket
 import json
 import sys
 import QueryBuilder
+import process_request
 
 class TestStringMethods(unittest.TestCase):
 
@@ -54,32 +55,35 @@ class TestStringMethods(unittest.TestCase):
 
       self.assertEqual(data['code'], 12)
 
-    def test_query_builder_simple(self):
-      queryList = []
-      queryList.append(["$and","age","eq",5])
-      queryList.append(["$and","weight","lt",20])
-      query = QueryBuilder.build_query(queryList)
-      self.assertEqual(query,'(age=5 AND weight<20)')
+    def test_process_request_simple(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{"age":{"gt":5}}]}'
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '(age > 5)')
 
-    def test_query_builder_complex(self):
-      queryList = []
-      queryList.append(["$and","age","eq",5])
-      queryList.append(["$and","weight","lt",20])
-      queryList.append(["$or","name","eq",'bob'])
-      queryList.append(["$and","region","eq",'Ontario'])
-      query = QueryBuilder.build_query(queryList)
-      self.assertEqual(query,'((age=5 AND weight<20) OR (name="bob" AND region="Ontario"))')
+    def test_process_request_simple_2(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{ "$and": [{"length" : {"lt" : 20} }, {"$or": [{"height": {"lt": 20}}, [{"age":{"eq":10}}]]}, {"$or": [{"height": {"lt": 20}}]}]}]}';
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '((length < 20 and (height < 20 or (age = 10)) and (height < 20)))')
 
-    def test_query_builder_complex_2(self):
-      queryList = []
-      queryList.append(["$or","age","eq",5])
-      queryList.append(["$or","weight","lt",20])
-      query = QueryBuilder.build_query(queryList)
-      self.assertEqual(query,'(age=5 OR weight<20)')
+    def test_process_request_nested(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] }]}'
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '((age = 5 and weight < 20 and (height = 20 or length = 20)))')
 
+    def test_process_request_complex(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }] }]}'
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '((age = 5 and weight < 20 and (height = 20 or length = 20) and (height = 20 or length = 20)))')
 
+    def test_process_request_complex_2(self):
+        json = '{"operation": "lookup", "animals": "cat", "field": [{ "$or": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }] }]}'
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '((age = 5 or weight < 20 or (height = 20 or length = 20) or (height = 20 or length = 20)))')
 
-
+    def test_process_request_complex_3(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{ "$or": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$and": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }, { "$and": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }] }]}'
+        sql = process_request.ProcessRequest(json)
+        self.assertEqual(sql, '((age = 5 or weight < 20 or (height = 20 and length = 20) or (height = 20 and length = 20)))')
 
 if __name__ == '__main__':
     unittest.main()
