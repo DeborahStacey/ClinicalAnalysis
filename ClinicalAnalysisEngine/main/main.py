@@ -2,7 +2,7 @@
 # Primary Owner: Andrew Downie
 
 import socket
-import jsonToSql
+import jsonToSqlParms
 import sys
 import os
 
@@ -64,8 +64,8 @@ while True:
 
 
         data = rawData.decode('utf-8')
-        requestResult = jsonToSql.JsonToSql(data)
-        conn.sendall(requestResult.encode('utf-8'))
+        sqlParms = jsonToSqlParms.JsonToSqlParms(data)
+        conn.sendall(sqlParms.encode('utf-8'))
 
 
     except socket.error:

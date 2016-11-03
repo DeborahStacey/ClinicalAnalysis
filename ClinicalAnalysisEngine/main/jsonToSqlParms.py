@@ -5,9 +5,9 @@ import error_message
 import json
 
 #####
-##### Json To Sql
+##### Json To Sql Parms
 #####
-def JsonToSql(jsonRequest):
+def JsonToSqlParms(jsonRequest):
     loadedJson = ""
 
 
@@ -46,7 +46,6 @@ def ParseJsonBranch(jsonBranch, lastOperator):
         if(type(jsonBranch) == type(dict())):
             for key, val in jsonBranch.items():
                 if(str(key)[0] == "$"):
-                    print(str(key)[1:])
                     return ParseJsonBranch(val, str(key)[1:])
                 else:
                     return JsonToSqlParm(jsonBranch)
@@ -71,7 +70,6 @@ def JsonToSqlParm(jsonLeaf):
     try:
         for field, jsonKeyVal in jsonLeaf.items():
             for operator, value in jsonKeyVal.items():
-                print(str(operator) + " " + str(value))
                 return str(field) + " " + operationConverter(operator) + " " + str(value)
     except Exception as e:
         print(">>ERROR3: " + str(e) + "\n")
