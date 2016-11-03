@@ -2,5 +2,5 @@
 # Primary Owner: Cole Hoffele
 
 
-def sqlParmsToQuery(requestResult):
-    print ("Request: " + requestResult)
+def sqlParmsToQuery(inputParms):
+    return inputParms

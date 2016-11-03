@@ -1,119 +1,48 @@
-import socket
+## adHocTesting.py
+# Primary Owner: Andrew Downie
+
+import checkPythonVersion
+import socketRequest
+import parseCLA
+import json
 import sys
+import os
 
-#####
-##### Available Tests
-#####
-jsonFront = '{"operation": "operation-here", "animals": "animal-here", "field": ['
-jsonBack = ']}'
-
-availableTests = {
-    'simple1': '{"age":{"gt":5}}',
-    'layered1':'{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } } ] } ] }',
-    'broken1': '{ "$and": [{ "age": { "eq": 5 } }, { "weight": { "lt": 20 } }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }, { "$or": [{ "height": { "eq": 20 } }, { "length": { "eq": 20 } }] }] }'
-}
-
-
-
-
-
-
-
-###
-### SelectTest
-###
-def SelectTest(testName):
-    try:
-        jsonMiddle = availableTests[testName]
-    except:
-        print("That test was not found")
-        quit()
-    jsonFull = jsonFront + jsonMiddle + jsonBack
-    print("Sending: \n" + jsonFull + "\n")
-    return jsonFull
-
-
-###
-### ParsePort
-###
-def ParsePort(port):
-    try:
-        return int(port)
-    except Exception as e:
-        print("Invalid -p parameter: " + str(e))
-        quit()
-
-
-###
-### Default info to connect to our server
-###
-hostDefault = '104.196.166.63'        # IP of the server
-portDefault = 12345                   # The same port as used by the server
-host = hostDefault
-port = portDefault
-testName = ''
+testFolder = "adhocTests"
 
 ###
 ### Check python version running this script
 ###
-version = sys.version.split(".")[0]
-if(version == "2"):
-    print("\nPlease run this script using python3,\n    quiting...\n")
-    quit()
+checkPythonVersion.ConfirmPythonVersion3()
 
 ###
-### Get overridable parameters from command line
+### Get CLA args
 ###
-for arg in sys.argv[1:]:
-    if(arg[0] == '-'):
-        if(arg[1] == 'p'):
-            port = ParsePort(arg[2:])
-        elif(arg[1] == 'h'):
-            host = arg[2:]
-    else:
-        testName = arg
-
+host, port, testName = parseCLA.HostPortData()
 
 ###
-### Show the settings the user has selected
-###
-if(host == hostDefault):
-    print("Host set to: (default host)")
-else:
-    print("Host set to: " + host)
-
-if(port == portDefault):
-    print("Port set to: (default port)")
-else:
-    print("Port set to: " + str(port))
-
-print("Test set to: " + testName)
-
-###
-### Explain how to select which test to run
+### Show test names
 ###
 if(testName == ""):
-    print("\n\nYou need to choose a test...")
-    print("Available precanned json tests are:")
-    for key, value in availableTests.items() :
-        print ("\t" + key)
+    print("\nYou must select a test, valid testnames are:")
 
-    print("\nexiting...")
+    for filename in os.listdir(testFolder):
+        print("\t" +filename)
+
+    print("\nExiting...\n")
     quit()
+else:
+    print("Selected test is: " + testName + "\n")
 
-#Setup socket, and connect to server
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((host, port))
+###
+### Load the selected test from the file with the coresponding name into a string
+###
+testFile = open(os.path.join(testFolder, testName), "r")
+testJson = testFile.read()
+print(testJson)
 
-
-#Run the selected test
-print("\nRunning test: " + testName + "\n")
-s.sendall(SelectTest(testName).encode('utf-8'))
-
-
-#Recieve response from server
-data = s.recv(1024)
-print('From server (', data.decode('utf-8'), ')')
-
-
-s.close()
+###
+### Send the json string, and wait for a response
+###
+result = socketRequest.JsonRequest(host, port, testJson)
+print("\n\n Result from server:\n" + result)
