@@ -2,7 +2,7 @@
 # Primary Owner: Andrew Downie
 
 import socket
-import process_request
+import jsonToSql
 import sys
 import os
 
@@ -64,7 +64,7 @@ while True:
 
 
         data = rawData.decode('utf-8')
-        requestResult = process_request.ProcessRequest(data)
+        requestResult = jsonToSql.JsonToSql(data)
         conn.sendall(requestResult.encode('utf-8'))
 
 

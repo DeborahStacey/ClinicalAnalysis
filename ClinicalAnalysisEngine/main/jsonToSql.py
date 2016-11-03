@@ -3,12 +3,11 @@
 
 import error_message
 import json
-import QueryBuilder
 
 #####
-##### Process Request
+##### Json To Sql
 #####
-def ProcessRequest(jsonRequest):
+def JsonToSql(jsonRequest):
     loadedJson = ""
 
 
@@ -39,17 +38,7 @@ def ProcessRequest(jsonRequest):
     animals = loadedJson['animals']
     fields = loadedJson['field']
 
-
-    sqlQuery = ParseJsonBranch(fields, None)
-    print(sqlQuery)
-    return "Premature exit"
-
-    try:
-        return QueryBuilder.build_query(allLeaves)
-    except Exception as e:
-        print(">>ERROR1: " + str(e) + "\n")
-
-    return "There was an error."
+    return ParseJsonBranch(fields, None)
 
 
 def ParseJsonBranch(jsonBranch, lastOperator):
