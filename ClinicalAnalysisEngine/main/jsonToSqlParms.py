@@ -2,6 +2,7 @@
 # Primary Owner: Andrew Downie
 
 import error_message
+import standards
 import json
 
 #####
@@ -17,18 +18,18 @@ def JsonToSqlParms(jsonRequest):
     try:
         loadedJson = json.loads(jsonRequest)
     except:
-    	return error_message.Return(1, "Invalid json request, improperly formatted json")
+    	return standards.InvalidJSON()
 
 
     ###
     ### Check that required keys are present
     ###
     if 'operation' not in loadedJson:
-    	return error_message.Return(10, "Invalid json request, missing key: operation")
+    	return standards.MissingOperation()
     elif 'animals' not in loadedJson:
-    	return error_message.Return(11, "Invalid json request, missing key: animals")
+    	return standards.MissingAnimal()
     elif 'field' not in loadedJson:
-    	return error_message.Return(12, "Invalid json request, missing key: field")
+    	return standards.MissingField()
 
 
     ###
@@ -62,7 +63,7 @@ def ParseJsonBranch(jsonBranch, lastOperator):
 
     except Exception as e:
         print(">>ERROR2: " + str(e) + "\n")
-        return
+        return None
 
 
 
