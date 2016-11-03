@@ -1,37 +1,23 @@
 # ClinicalAnalysis
 
 ## Usage
-### Directory: ClinicalAnalysisEngine/main 
-DATE: Oct 21st, 2016
+### Directory: ClinicalAnalysisEngine/main
+DATE: Nov 03rd, 2016
 
 #### Description:
-It is now possible to send a json request with three required key parameters: "operation", "animals", and "field". If "weight" and/or "height" is sent as values of "field", then mock data for "weight" and/or "height" data will be sent back. The next step is to replace the mock data, with actual data grabbed from the database.
-####Connect to Google cloud instance:
-Parameter based input: `$ python3 fieldPoke.py`
+It is now possible to send json logic, and have it converted to sql parameters.
+NOTE: Due to the tedious nature of writing json by hand, fieldPoke.py and client.py have been removed
+Immediate next steps: 1) use the generated sql parameters to build a full sql statement, and query the database. 2) Get the front end team regularly sending us json requests to our stable build
 
-Freeform user input: `$ python3 client.py`
+####Connect to Google cloud instance:
+Precanned json queries: `$ python3 adHocTesting.py <testName>`
 
 ####Run entirely locally:
 Start the clinical analysis engine locally: `$ ./startServer.sh`
 
-Stop the local clinical analysis engine: `$ ./stopServer.sh`
+Stop the local clinical analysis engine: `$ python3 stopServer.py`
 
-Run client (freeform user input): `$ python3 client.py localhost`
-
-Run client (parameter based input): `$ python3 fieldPoke.py localhost`
+Precanned json queries: `$ python3 adHocTesting.py -h localhost <testName>`
 
 
-
-### Directory: ClinicalAnalysisEngine/socket_example 
-DATE: Oct 14th, 2016
-#####Running: client on local machine, and connecting to server in the cloud:
-1. Run client.py 
-`$ python3 client.py`
-2. Type a message into the client.py's prompt, and the message will be sent using sockets to the server.py script,
-   the server.py will then send the message back to client.py
-
-#####Running both client and server on local machine:
-1. Run server.py in one terminal: `$ python3 server.py`
-2. Run client.py in a second terminal with localhost as the first argument: `$ python3 client.py localhost`
-3. Type a message into the client.py's prompt, and the message will be sent through the socket, to server.py, and server.py
-   will send the message back to client.py 
+**NOTE: running `$python3 adHocTesting` without the testName parameter will give a list of all available test name**

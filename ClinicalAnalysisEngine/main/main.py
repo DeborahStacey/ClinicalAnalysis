@@ -61,7 +61,10 @@ while True:
             print("Completed request is:\n" + completedRequest)
             conn.sendall(completedRequest.encode('utf-8'))
 
-        conn.close()
+
     except socket.error:
         print("Error Occured. Did a client connect but not send anything?")
         continue
+
+    finally:
+        conn.close()
