@@ -15,9 +15,9 @@ Immediate next steps: 1) use the generated sql parameters to build a full sql st
 Precanned json queries: `$ python3 adHocTesting.py <testName>`
 
 ####Run entirely locally:
-Start the clinical analysis engine locally: `$ python3 startMain.py`
+Start the clinical analysis engine locally: `$ ./startMain.py`
 
-Stop the local clinical analysis engine: `$ python3 stopMain.py`
+Stop the local clinical analysis engine: `$ ./stopMain.py`
 
 Precanned json queries: `$ python3 adHocTesting.py -h localhost <testName>`
 
