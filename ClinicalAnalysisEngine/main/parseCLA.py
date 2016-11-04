@@ -65,8 +65,8 @@ def HostPortDatalist():
     ###
     ### Show the settings the user has selected
     ###
-    print("\nHost set to: " + host)
-    print("Port set to: " + str(port))
+    print("\nHost(-h) set to: " + host)
+    print("Port(-p) set to: " + str(port))
     print("Other args set to: " + str(data) + "\n")
 
     return host, port, data
@@ -76,12 +76,12 @@ def HostPortDatalist():
 #####
 # Gives the user the option to over ride default host and port, using -h and -p flags
 # The last argument not preceeded by a -h or a -p will be returned as the third return value
-# Unused args will be printed to command line
+# Unused args will be printed to command line, as ignored args
 def HostPortData():
     host = hostClientDefault
     port = portDefault
     data = ""
-    unusedArgs = []
+    ignoredArgs = []
 
     args = sys.argv
     argc = len(args)
@@ -94,11 +94,11 @@ def HostPortData():
         elif(curArg == "-p"):
             port = ParsePort(nextArg)
         elif(prevArg != "-h" and prevArg != "-p"):
-            unusedArgs.append(curArg)
+            ignoredArgs.append(curArg)
             data = curArg
 
-    if(len(unusedArgs) > 0):
-        del unusedArgs[-1]
+    if(len(ignoredArgs) > 0):
+        del ignoredArgs[-1]
 
     ###
     ### Show the settings the user has selected
@@ -106,7 +106,7 @@ def HostPortData():
     print("\nHost set to: " + str(host))
     print("Port set to: " + str(port))
     print("CLA input set to: " + str(data))
-    print("Unused args are: " + ", ".join(unusedArgs) + "\n")
+    print("Unused args are: " + ", ".join(ignoredArgs) + "\n")
 
     return host, port, data
 
@@ -116,7 +116,7 @@ def HostPortData():
 def Server_HostPort():
     host = hostServerDefault
     port = portDefault
-    unusedArgs = []
+    ignoredArgs = []
 
     args = sys.argv
     argc = len(args)
@@ -129,7 +129,7 @@ def Server_HostPort():
         elif(curArg == "-p"):
             port = ParsePort(nextArg)
         elif(prevArg != "-h" and prevArg != "-p"):
-            unusedArgs.append(curArg)
+            ignoredArgs.append(curArg)
 
     ###
     ### Show settings the server is being run with
@@ -137,5 +137,8 @@ def Server_HostPort():
     printHost = host
     if(printHost == ''):
         printHost = '(default host)'
-    print("\nRunning server\n    Host: " + printHost + "\n    Port: " + str(port) + "\n    Unused args: " + ", ".join(unusedArgs) + "\n")
+    print("\nRunning server")
+    print("    Host(-h): " + printHost)
+    print("    Port(-p): " + str(port))
+    print("    Ignored args: " +  ", ".join(ignoredArgs) + "\n")
     return host, port
