@@ -20,7 +20,7 @@ def get_all():
     return cur.fetchall()
 
 
-def get_dict():
+def get_dict(query):
     cur = get_con().cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cur.execute("""SELECT * FROM pet""")
+    cur.execute(query)
     return cur.fetchall()

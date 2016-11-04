@@ -1,0 +1,10 @@
+{
+	"operation": "lookup",
+	"animals": "cat",
+	"field": {
+		"length": {
+			"gt":
+			 19
+		}
+	}
+}
