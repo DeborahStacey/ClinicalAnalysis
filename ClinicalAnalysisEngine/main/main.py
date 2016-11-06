@@ -1,15 +1,18 @@
 ## main.py
 # Primary Owner: Clinical Analysis Team
 
+
+from time import gmtime, strftime
 import checkPythonVersion
 import processRequest
 import parseCLA
+import logging
 import socket
 import sys
 import os
 
-from ClinicalAnalysisEngine import Cat
-from ClinicalAnalysisEngine import sql_utils
+#from ClinicalAnalysisEngine import Cat
+#from ClinicalAnalysisEngine import sql_utils
 
 ###
 ### Check python version running this script
@@ -44,7 +47,8 @@ s.bind((host, port))
 while True:
     s.listen(1)
     conn, addr = s.accept()
-    print('Connected by', addr)
+    
+    logging.PrintLog("Connected by: " + str(addr))    
 
     try:
         rawData = conn.recv(1024)
@@ -54,19 +58,18 @@ while True:
         data = rawData.decode('utf-8')
 
         completedRequest = processRequest.ProcessRequest(data)
-        query = "SELECT * FROM pet WHERE " + completedRequest
-        print(query)
+        #query = "SELECT * FROM pet WHERE " + completedRequest
+        #print(query)
 
-        sql_data = sql_utils.get_dict(query)
-        cats = Cat.sql_data_to_cats(sql_data)
-        completedRequest = Cat.cats_to_json(cats)
+        #sql_data = sql_utils.get_dict(query)
+        #cats = Cat.sql_data_to_cats(sql_data)
+        #completedRequest = Cat.cats_to_json(cats)
 
 
         if(completedRequest == None):
             returnMsg = "ERROR: completed request was none"
             conn.sendall(returnMsg.encode('utf-8'))
         else:
-            print("Completed request is:\n" + completedRequest)
             conn.sendall(completedRequest.encode('utf-8'))
 
 

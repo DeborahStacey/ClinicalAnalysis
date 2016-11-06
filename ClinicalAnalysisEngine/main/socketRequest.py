@@ -8,7 +8,7 @@ def JsonRequest(host, port, jsonData):
     ### Check jsonData is not empty string
     ###
     if(jsonData == ''):
-        print("\nsocketRequest.JsonRequest: jsonData arg was empty string, nothing to send, exiting...")
+        print("\nsocketRequest.JsonRequest: jsonData arg was empty string, nothing to send, exiting...\n")
         quit()
 
     ###

@@ -1,6 +1,7 @@
 ## parseCLA.py
 # Primary Owner: Andrew Downie
 
+import logging
 import sys
 
 hostClientDefault = '104.196.166.63'  # IP of the server
@@ -77,7 +78,7 @@ def HostPortDatalist():
 # Gives the user the option to over ride default host and port, using -h and -p flags
 # The last argument not preceeded by a -h or a -p will be returned as the third return value
 # Unused args will be printed to command line, as ignored args
-def HostPortData():
+def HostPortData(dataName="CLA input"):
     host = hostClientDefault
     port = portDefault
     data = ""
@@ -105,8 +106,8 @@ def HostPortData():
     ###
     print("\nHost set to: " + str(host))
     print("Port set to: " + str(port))
-    print("CLA input set to: " + str(data))
-    print("Unused args are: " + ", ".join(ignoredArgs) + "\n")
+    print(dataName + " set to: " + str(data))
+    print("Ignored args are: " + ", ".join(ignoredArgs) + "\n")
 
     return host, port, data
 
@@ -137,8 +138,10 @@ def Server_HostPort():
     printHost = host
     if(printHost == ''):
         printHost = '(default host)'
-    print("\nRunning server")
-    print("    Host(-h): " + printHost)
-    print("    Port(-p): " + str(port))
-    print("    Ignored args: " +  ", ".join(ignoredArgs) + "\n")
+
+    startMsg = "Starting Server -> "
+    startMsg += "Host( " + printHost
+    startMsg += " ), Port( " + str(port)
+    startMsg += " ), Ignored args: " +  ", ".join(ignoredArgs)
+    logging.PrintLog(startMsg)
     return host, port

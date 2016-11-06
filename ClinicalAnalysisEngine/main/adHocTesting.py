@@ -21,7 +21,7 @@ checkPythonVersion.ConfirmPythonVersion3()
 ###
 ### Get CLA args
 ###
-host, port, testName = parseCLA.HostPortData()
+host, port, testName = parseCLA.HostPortData("Testname")
 
 
 ###
@@ -35,20 +35,23 @@ if(testName == ""):
 
     print("\nExiting...\n")
     quit()
-else:
-    print("Selected test is: " + testName + "\n")
 
 
 ###
 ### Load the selected test from the file with the coresponding name into a string
 ###
-testFile = open(os.path.join(testFolder, testName), "r")
-testJson = testFile.read()
-print(testJson)
+testFilePath = os.path.join(testFolder, testName) 
+try:
+    testFile = open(testFilePath, "r")
+    testJson = testFile.read()
+except:
+    print("Error opening test file: " + testFilePath + ",\n\tquiting...\n")
+    quit()
 
 
 ###
 ### Send the json string, and wait for a response
 ###
+print(testJson)
 result = socketRequest.JsonRequest(host, port, testJson)
 print("\n\n Result from server:\n" + result)

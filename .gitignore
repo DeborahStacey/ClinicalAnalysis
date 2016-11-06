@@ -96,3 +96,6 @@ bin
 
 # Process and port conf file generated every run by main.py
 pidport.conf
+errors.main.py
+log.main.py
+
