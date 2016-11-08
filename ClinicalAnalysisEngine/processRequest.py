@@ -15,7 +15,7 @@ def ProcessRequest(dataInput):
     sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms)
 		
 
-    sql_data = sql_utils.get_dict("""SELECT * FROM pet WHERE """ + sqlQuery)
+    sql_data = sql_utils.get_dict(sqlQuery)
     cats = Cat.sql_data_to_cats(sql_data)
     completedRequest = Cat.cats_to_json(cats)
 
