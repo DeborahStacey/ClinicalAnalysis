@@ -48,6 +48,7 @@ while True:
 
     logger.PrintLog("Connected by: " + str(addr))
 
+
     try:
         rawData = conn.recv(1024)
         if not rawData: continue
@@ -58,6 +59,7 @@ while True:
         completedRequest = processRequest.ProcessRequest(data)
 
 
+##
         if(completedRequest == None):
             returnMsg = "ERROR: completed request was none"
             conn.sendall(returnMsg.encode('utf-8'))

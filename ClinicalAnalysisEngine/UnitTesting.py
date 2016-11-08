@@ -1,4 +1,3 @@
-import unittest
 import socket
 import json
 import sys
@@ -6,17 +5,21 @@ import standards
 import jsonToSqlParms
 import parseCLA
 
+host, port, data = parseCLA.HostPortData()
+sys.argv = [sys.argv[0]]
+
+import unittest
+
+#host = '104.196.166.63'        # IP of the server
+#port = 12345                   # The same port as used by the server
+
 class TestStringMethods(unittest.TestCase):
-
-    host = '104.196.166.63'        # IP of the server
-    port = 12345                   # The same port as used by the server
-
 
     # Test incorrect JSON
     def test_formatting(self):
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((TestStringMethods.host, TestStringMethods.port))
+        s.connect((host, port))
         s.sendall("hello".encode('utf-8'))
         data = json.loads(s.recv(1024).decode('utf-8'))
         s.close()
@@ -27,7 +30,7 @@ class TestStringMethods(unittest.TestCase):
     def test_missing_operation_key(self):
 
       s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      s.connect((TestStringMethods.host, TestStringMethods.port))
+      s.connect((host, port))
       s.sendall('{"animals":"all","fields":"weight"}'.encode('utf-8'))
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
@@ -38,7 +41,7 @@ class TestStringMethods(unittest.TestCase):
     def test_missing_animal_key(self):
 
       s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      s.connect((TestStringMethods.host, TestStringMethods.port))
+      s.connect((host, port))
       s.sendall('{"operation":"lookup","fields":"weight"}'.encode('utf-8'))
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
@@ -49,7 +52,7 @@ class TestStringMethods(unittest.TestCase):
     def test_missing_field_key(self):
 
       s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      s.connect((TestStringMethods.host, TestStringMethods.port))
+      s.connect((host, port))
       s.sendall('{"operation":"lookup","animals":"all"}'.encode('utf-8'))
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
@@ -92,5 +95,4 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(sql, '((age = 5 or (height < 50 and weight > 500 and age = 100 and (butts = 1 or diabetes != true or (dob = 1998 and dod = 1999 and tail != false and color = orange)))))')
 
 if __name__ == '__main__':
-    host, port, data = parseCLA.HostPortData()
     unittest.main()

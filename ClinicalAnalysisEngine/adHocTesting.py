@@ -40,7 +40,7 @@ if(testName == ""):
 ###
 ### Load the selected test from the file with the coresponding name into a string
 ###
-testFilePath = os.path.join(testFolder, testName) 
+testFilePath = os.path.join(testFolder, testName)
 try:
     testFile = open(testFilePath, "r")
     testJson = testFile.read()
@@ -52,6 +52,5 @@ except:
 ###
 ### Send the json string, and wait for a response
 ###
-print(testJson)
 result = socketRequest.JsonRequest(host, port, testJson)
 print("\n\n Result from server:\n" + result)
