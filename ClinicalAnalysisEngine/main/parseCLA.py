@@ -15,7 +15,7 @@ def ParsePort(port):
     try:
         return int(port)
     except Exception as e:
-        print("\nInvalid -p parameter: " + str(e) + "\n")
+        print("\nInvalid -port parameter: " + str(e) + "\n")
         quit()
 
 
@@ -43,8 +43,8 @@ def PrevCurNextItem(array, index):
 #####
 ##### HostPortDatalist
 #####
-# Gives the user the option to over ride default host and port, using -h and -p flags
-# Arguments not preceeded by a -h or a -p will be added to a list, and returned as the 3rd parameter
+# Gives the user the option to over ride default host and port, using -host and -port flags
+# Arguments not preceeded by a -host or a -port will be added to a list, and returned as the 3rd parameter
 def HostPortDatalist():
     host = hostClientDefault
     port = portDefault
@@ -56,18 +56,18 @@ def HostPortDatalist():
     for i in range(1, argc):
         prevArg, curArg, nextArg = PrevCurNextItem(args, i)
 
-        if(curArg == "-h"):
+        if(curArg == "-host"):
             host = nextArg
-        elif(curArg == "-p"):
+        elif(curArg == "-port"):
             port = ParsePort(nextArg)
-        elif(prevArg != "-h" and prevArg != "-p"):
+        elif(prevArg != "-host" and prevArg != "-port"):
             data.append(curArg)
 
     ###
     ### Show the settings the user has selected
     ###
-    print("\nHost(-h) set to: " + host)
-    print("Port(-p) set to: " + str(port))
+    print("\nHost(-host) set to: " + host)
+    print("Port(-port) set to: " + str(port))
     print("Other args set to: " + str(data) + "\n")
 
     return host, port, data
@@ -75,8 +75,8 @@ def HostPortDatalist():
 #####
 ##### HostPortData
 #####
-# Gives the user the option to over ride default host and port, using -h and -p flags
-# The last argument not preceeded by a -h or a -p will be returned as the third return value
+# Gives the user the option to over ride default host and port, using -host and -port flags
+# The last argument not preceeded by a -host or a -port will be returned as the third return value
 # Unused args will be printed to command line, as ignored args
 def HostPortData(dataName="CLA input"):
     host = hostClientDefault
@@ -90,11 +90,11 @@ def HostPortData(dataName="CLA input"):
     for i in range(1, argc):
         prevArg, curArg, nextArg = PrevCurNextItem(args, i)
 
-        if(curArg == "-h"):
+        if(curArg == "-host"):
             host = nextArg
-        elif(curArg == "-p"):
+        elif(curArg == "-port"):
             port = ParsePort(nextArg)
-        elif(prevArg != "-h" and prevArg != "-p"):
+        elif(prevArg != "-host" and prevArg != "-port"):
             ignoredArgs.append(curArg)
             data = curArg
 
@@ -125,11 +125,11 @@ def Server_HostPort():
     for i in range(1, argc):
         prevArg, curArg, nextArg = PrevCurNextItem(args, i)
 
-        if(curArg == "-h"):
+        if(curArg == "-host"):
             host = nextArg
-        elif(curArg == "-p"):
+        elif(curArg == "-port"):
             port = ParsePort(nextArg)
-        elif(prevArg != "-h" and prevArg != "-p"):
+        elif(prevArg != "-host" and prevArg != "-port"):
             ignoredArgs.append(curArg)
 
     ###
