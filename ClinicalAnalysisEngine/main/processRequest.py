@@ -12,4 +12,4 @@ def ProcessRequest(dataInput):
 
     sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms)
 
-    return sqlParms
+    return sqlQuery

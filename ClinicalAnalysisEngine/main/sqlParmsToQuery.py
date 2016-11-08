@@ -3,4 +3,6 @@
 
 
 def sqlParmsToQuery(inputParms):
-    return inputParms
+
+    query = "SELECT * FROM pet WHERE " + inputParms
+    return query
