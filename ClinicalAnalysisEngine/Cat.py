@@ -1,8 +1,8 @@
 ## Class: Cat
 # Primary Owner: Russell Dunk
 
-from ClinicalAnalysisEngine import BaseInfo
-from ClinicalAnalysisEngine import sql_utils
+import BaseInfo
+import sql_utils
 
 
 class Cat:

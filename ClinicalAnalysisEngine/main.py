@@ -11,8 +11,6 @@ import socket
 import sys
 import os
 
-#from ClinicalAnalysisEngine import Cat
-#from ClinicalAnalysisEngine import sql_utils
 
 ###
 ### Check python version running this script
@@ -58,12 +56,6 @@ while True:
         data = rawData.decode('utf-8')
 
         completedRequest = processRequest.ProcessRequest(data)
-        #query = "SELECT * FROM pet WHERE " + completedRequest
-        #print(query)
-
-        #sql_data = sql_utils.get_dict(query)
-        #cats = Cat.sql_data_to_cats(sql_data)
-        #completedRequest = Cat.cats_to_json(cats)
 
 
         if(completedRequest == None):
