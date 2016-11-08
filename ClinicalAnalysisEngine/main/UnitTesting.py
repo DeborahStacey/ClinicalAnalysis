@@ -1,3 +1,6 @@
+## UnitTesting.py
+# Primary Owner: Alex Eckensweiler
+
 import socket
 import json
 import sys
@@ -9,9 +12,6 @@ host, port, data = parseCLA.HostPortData()
 sys.argv = [sys.argv[0]]
 
 import unittest
-
-#host = '104.196.166.63'        # IP of the server
-#port = 12345                   # The same port as used by the server
 
 class TestStringMethods(unittest.TestCase):
 
