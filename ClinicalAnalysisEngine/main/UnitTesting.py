@@ -4,6 +4,7 @@ import json
 import sys
 import standards
 import jsonToSqlParms
+import parseCLA
 
 class TestStringMethods(unittest.TestCase):
 
@@ -20,7 +21,7 @@ class TestStringMethods(unittest.TestCase):
         data = json.loads(s.recv(1024).decode('utf-8'))
         s.close()
 
-        self.assertEqual(data['code'], 1)
+        self.assertEqual(data['code'], 'ERROR_01')
 
     # Test missing operation key
     def test_missing_operation_key(self):
@@ -31,7 +32,7 @@ class TestStringMethods(unittest.TestCase):
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
 
-      self.assertEqual(data['code'], 10)
+      self.assertEqual(data['code'], 'ERROR_10')
 
     # Test missing animal key
     def test_missing_animal_key(self):
@@ -42,7 +43,7 @@ class TestStringMethods(unittest.TestCase):
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
 
-      self.assertEqual(data['code'], 11)
+      self.assertEqual(data['code'], 'ERROR_11')
 
     # Test missing field key
     def test_missing_field_key(self):
@@ -53,7 +54,7 @@ class TestStringMethods(unittest.TestCase):
       data = json.loads(s.recv(1024).decode('utf-8'))
       s.close()
 
-      self.assertEqual(data['code'], 12)
+      self.assertEqual(data['code'], 'ERROR_12')
 
     def test_jsonToSqlParms_simple(self):
         json = '{"operation": "operation-here", "animals": "animal-here", "field": [{"age":{"gt":5}}]}'
@@ -86,9 +87,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(sql, '((age = 5 or weight < 20 or (height = 20 and length = 20) or (height = 20 and length = 20)))')
 
     def test_jsonToSqlParms_complex_4(self):
-        json = '{"operation":"lookup","animals":"cat","field":[{"$or":[{"age":{"eq":"5"}}],"$and":[{"height":{"lt":"50"},"weight":{"gt":"500"},"age":{"eq":"100"},"$or":[{"butts":{"eq":"1"},"diabetes":{"ne":"true"},"$and":[{"dob":{"eq":"1998"},"dod":{"eq":"1999"},"$or":{"tail":{"ne":"false"},"color":{"eq":"orange"}}}]}]}]}]}'
-        sql = jsonToSqlParms.JsonToSqlParm(json)
-        self.assertEqual(sql, '')
+        json = '{"operation":"lookup","animals":"cat","field":[{"$or":[{"age":{"eq":"5"}},{"$and":[{"height":{"lt":"50"}},{"weight":{"gt":"500"}},{"age":{"eq":"100"}},{"$or":[{"butts":{"eq":"1"}},{"diabetes":{"ne":"true"}},{"$and":[{"dob":{"eq":"1998"}},{"dod":{"eq":"1999"}},{"$or":{"tail":{"ne":"false"}}},{"color":{"eq":"orange"}}]}]}]}]}]}'
+        sql = jsonToSqlParms.JsonToSqlParms(json)
+        self.assertEqual(sql, '((age = 5 or (height < 50 and weight > 500 and age = 100 and (butts = 1 or diabetes != true or (dob = 1998 and dod = 1999 and tail != false and color = orange)))))')
 
 if __name__ == '__main__':
+    host, port, data = parseCLA.HostPortData()
     unittest.main()

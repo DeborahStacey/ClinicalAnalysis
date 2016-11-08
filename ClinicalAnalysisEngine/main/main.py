@@ -6,7 +6,7 @@ from time import gmtime, strftime
 import checkPythonVersion
 import processRequest
 import parseCLA
-import logging
+import logger
 import socket
 import sys
 import os
@@ -47,8 +47,8 @@ s.bind((host, port))
 while True:
     s.listen(1)
     conn, addr = s.accept()
-    
-    logging.PrintLog("Connected by: " + str(addr))    
+
+    logger.PrintLog("Connected by: " + str(addr))
 
     try:
         rawData = conn.recv(1024)
