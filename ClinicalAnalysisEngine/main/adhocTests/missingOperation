@@ -1,0 +1,8 @@
+{
+	"animals": "cat",
+	"field": {
+		"age": {
+			"gt": 5
+		}
+	}
+}

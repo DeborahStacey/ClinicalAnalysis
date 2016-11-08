@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2016-11-08 13:54:57 GMT] Starting Server -> Host( (default host) ), Port( 12345 ), Ignored args: 
 [2016-11-08 13:57:01 GMT] Starting Server -> Host( (default host) ), Port( 12345 ), Ignored args: 
 [2016-11-08 14:31:13 GMT] Starting Server -> Host( (default host) ), Port( 12345 ), Ignored args: 
@@ -109,3 +110,10 @@ Query = SELECT * FROM pet WHERE SELECT * FROM pet WHERE ((age = 5 and weight < 2
 SELECT * FROM pet WHERE ((age = 5 and weight < 20 and (height = 20 or length = 20)))
 SELECT * FROM pet WHERE ((age = 5 and weight < 20 and (height = 20 or length = 20)))
 Query = SELECT * FROM pet WHERE SELECT * FROM pet WHERE ((age = 5 and weight < 20 and (height = 20 or length = 20)))
+=======
+[2016-11-08 14:55:23 GMT] Starting Server -> Host( (default host) ), Port( 12345 ), Ignored args: 
+[2016-11-08 14:55:37 GMT] Connected by: ('127.0.0.1', 60805)
+[2016-11-08 14:55:38 GMT] Connected by: ('127.0.0.1', 60806)
+[2016-11-08 14:55:38 GMT] Connected by: ('127.0.0.1', 60807)
+[2016-11-08 14:55:38 GMT] Connected by: ('127.0.0.1', 60808)
+>>>>>>> b0590c97a2b3a0a2766ffa15bb020bede3abfce2

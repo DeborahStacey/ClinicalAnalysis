@@ -1,3 +1,4 @@
+import json
 
 def InvalidJSON():
     return Return(INVALID_JSON_CODE, INVALID_JSON_MESSAGE)
