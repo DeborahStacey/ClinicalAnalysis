@@ -15,6 +15,9 @@ class Standards():
     def MissingField():
         return Return(MISSING_FIELD_CODE, MISSING_FIELD_MESSAGE)
 
+    def CaughtException():
+        return Return(EXCEPTION_CODE, EXCEPTION_MESSAGE)
+
     INVALID_JSON_CODE = 'ERROR_01'
     INVALID_JSON_MESSAGE = "Invalid json request, improperly formatted json"
 
@@ -29,6 +32,9 @@ class Standards():
 
     MISSING_FIELD_CODE = 'ERROR_12'
     MISSING_FIELD_MESSAGE = "Invalid json request, missing key: field"
+
+    EXCEPTION_CODE = 'ERROR_99'
+    EXCEPTION_MESSAGE = "Exception caught"
 
     def Return(code, message):
         jsonMsg = {}
