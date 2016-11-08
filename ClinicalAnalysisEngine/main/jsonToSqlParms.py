@@ -1,7 +1,9 @@
 ## process_request.py
 # Primary Owner: Andrew Downie
 
+import jsonOpConverter
 import error_message
+import standards
 import json
 
 #####
@@ -17,18 +19,18 @@ def JsonToSqlParms(jsonRequest):
     try:
         loadedJson = json.loads(jsonRequest)
     except:
-    	return error_message.Return(1, "Invalid json request, improperly formatted json")
+    	return standards.InvalidJSON()
 
 
     ###
     ### Check that required keys are present
     ###
     if 'operation' not in loadedJson:
-    	return error_message.Return(10, "Invalid json request, missing key: operation")
+    	return standards.MissingOperation()
     elif 'animals' not in loadedJson:
-    	return error_message.Return(11, "Invalid json request, missing key: animals")
+    	return standards.MissingAnimal()
     elif 'field' not in loadedJson:
-    	return error_message.Return(12, "Invalid json request, missing key: field")
+    	return standards.MissingField()
 
 
     ###
@@ -38,7 +40,8 @@ def JsonToSqlParms(jsonRequest):
     animals = loadedJson['animals']
     fields = loadedJson['field']
 
-    return ParseJsonBranch(fields, None)
+    sqlParms = ParseJsonBranch(fields, None)
+    return sqlParms
 
 
 def ParseJsonBranch(jsonBranch, lastOperator):
@@ -62,7 +65,7 @@ def ParseJsonBranch(jsonBranch, lastOperator):
 
     except Exception as e:
         print(">>ERROR2: " + str(e) + "\n")
-        return
+        return None
 
 
 
@@ -70,26 +73,6 @@ def JsonToSqlParm(jsonLeaf):
     try:
         for field, jsonKeyVal in jsonLeaf.items():
             for operator, value in jsonKeyVal.items():
-                return str(field) + " " + operationConverter(operator) + " " + str(value)
+                return str(field) + " " + jsonOpConverter.Convert(operator) + " " + str(value)
     except Exception as e:
         print(">>ERROR3: " + str(e) + "\n")
-
-
-
-def operationConverter(operation):
-    try:
-        if(operation == "lt"):
-            return "<"
-        elif (operation == "gt"):
-            return ">"
-        elif (operation == "eq"):
-            return "="
-        elif (operation == "ne"):
-            return "!="
-        elif (operation == "lte"):
-            return "<="
-        elif (operation == "gte"):
-            return ">="
-        return "Error4: Invalid Operator"
-    except Exception as e:
-        print(">>ERROR5: " + str(e) + "\n")

@@ -22,13 +22,20 @@ class Cat:
         return json[:-2]
 
 
-debug = ''
 
-json = '{"cats": ['
-cats = sql_utils.get_dict()
-for cat in cats:
-    json += debug + '{' + Cat(BaseInfo.BaseInfo(**cat)).json() + '}, '
-json = json[:-2]
-json += debug + "]}"
+def sql_data_to_cats(sql_data):
+    cats = []
+    for cat in sql_data:
+        cats.append(Cat(BaseInfo.BaseInfo(**cat)))
+    return cats
 
-print(json)
+
+def cats_to_json(cats):
+    # Debug allows for newlines in keyplaces in json
+    debug = ''
+    json = '{"cats": ['
+    for cat in cats:
+        json += debug + '{' +  cat.json() + '}, '
+    json = json[:-2]
+    json += debug + "]}"
+    return json

@@ -1,34 +1,29 @@
 ## main.py
-# Primary Owner: Andrew Downie
+# Primary Owner: Clinical Analysis Team
 
+
+from time import gmtime, strftime
+import checkPythonVersion
+import processRequest
+import parseCLA
+import logging
 import socket
-import jsonToSqlParms
 import sys
 import os
 
-
-host = ''        # Symbolic name meaning all available interfaces
-port = 12345     # Arbitrary non-privileged port
-
+#from ClinicalAnalysisEngine import Cat
+#from ClinicalAnalysisEngine import sql_utils
 
 ###
 ### Check python version running this script
 ###
-version = sys.version.split(".")[0]
-if(version == "2"):
-    print("\nPlease run this script using python3,\n    quiting...\n")
-    quit()
+checkPythonVersion.ConfirmPythonVersion3()
 
 
 ###
-### Check command lines args
+### Get command line args (host and port)
 ###
-if(len(sys.argv) >= 2): #A port has been provided
-    try:
-        port = int(sys.argv[1])
-    except:
-        print("Given port (arg 1), was not a proper port/integer")
-
+host, port = parseCLA.Server_HostPort()
 
 
 ###
@@ -39,14 +34,12 @@ f.write(str(os.getpid()) + "," + str(port))
 f.close()
 
 
-
 ###
 ### Setup the socket
 ###
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 
-print("Starting server at: " + host + ":" + str(port))
 
 ###
 ### Main program loop (wait for a request)
@@ -54,22 +47,35 @@ print("Starting server at: " + host + ":" + str(port))
 while True:
     s.listen(1)
     conn, addr = s.accept()
-    print('Connected by', addr)
+    
+    logging.PrintLog("Connected by: " + str(addr))    
 
     try:
         rawData = conn.recv(1024)
         if not rawData: continue
 
 
-
-
         data = rawData.decode('utf-8')
-        sqlParms = jsonToSqlParms.JsonToSqlParms(data)
-        conn.sendall(sqlParms.encode('utf-8'))
+
+        completedRequest = processRequest.ProcessRequest(data)
+        #query = "SELECT * FROM pet WHERE " + completedRequest
+        #print(query)
+
+        #sql_data = sql_utils.get_dict(query)
+        #cats = Cat.sql_data_to_cats(sql_data)
+        #completedRequest = Cat.cats_to_json(cats)
+
+
+        if(completedRequest == None):
+            returnMsg = "ERROR: completed request was none"
+            conn.sendall(returnMsg.encode('utf-8'))
+        else:
+            conn.sendall(completedRequest.encode('utf-8'))
 
 
     except socket.error:
         print("Error Occured. Did a client connect but not send anything?")
         continue
 
-conn.close()
+    finally:
+        conn.close()
