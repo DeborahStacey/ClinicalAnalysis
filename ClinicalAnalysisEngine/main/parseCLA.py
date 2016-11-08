@@ -1,7 +1,7 @@
 ## parseCLA.py
 # Primary Owner: Andrew Downie
 
-import logging
+import logger
 import sys
 
 hostClientDefault = '104.196.166.63'  # IP of the server
@@ -143,5 +143,5 @@ def Server_HostPort():
     startMsg += "Host( " + printHost
     startMsg += " ), Port( " + str(port)
     startMsg += " ), Ignored args: " +  ", ".join(ignoredArgs)
-    logging.PrintLog(startMsg)
+    logger.PrintLog(startMsg)
     return host, port
