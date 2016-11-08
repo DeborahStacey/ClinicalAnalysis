@@ -11,8 +11,6 @@ import socket
 import sys
 import os
 
-import Cat
-import sql_utils
 
 ###
 ### Check python version running this script
