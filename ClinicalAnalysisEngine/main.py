@@ -1,12 +1,12 @@
 ## main.py
 # Primary Owner: Clinical Analysis Team
 
+from cautils import checkPythonVersion
+from cautils import parseCLA
+from cautils import logger
 
 from time import gmtime, strftime
-import checkPythonVersion
 import processRequest
-import parseCLA
-import logger
 import socket
 import sys
 import os

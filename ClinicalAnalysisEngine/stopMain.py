@@ -2,7 +2,7 @@
 ## stopMain.py
 # Primary Owner: Andrew Downie
 
-import checkPythonVersion
+from cautils import checkPythonVersion
 import sys
 
 

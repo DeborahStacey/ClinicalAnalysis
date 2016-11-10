@@ -2,7 +2,6 @@
 # Primary Owner: Andrew Downie
 
 import jsonOpConverter
-import error_message
 import standards
 import json
 

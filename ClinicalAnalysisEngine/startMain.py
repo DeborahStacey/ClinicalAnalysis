@@ -2,7 +2,7 @@
 ## startMain.py
 # Primary Owner: Andrew Downie
 
-import checkPythonVersion
+from cautils import checkPythonVersion
 import subprocess 
 import sys
 

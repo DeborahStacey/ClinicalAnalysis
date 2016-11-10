@@ -1,9 +1,9 @@
 ## adHocTesting.py
 # Primary Owner: Andrew Downie
 
-import checkPythonVersion
-import socketRequest
-import parseCLA
+from cautils import checkPythonVersion
+from cautils import socketRequest
+from cautils import parseCLA
 import json
 import sys
 import os
@@ -53,4 +53,4 @@ except:
 ### Send the json string, and wait for a response
 ###
 result = socketRequest.JsonRequest(host, port, testJson)
-print("\n\n Result from server:\n" + result)
+print("\n\nResult from server:\n" + result)
