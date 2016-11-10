@@ -18,7 +18,7 @@ def MissingAnimal():
 def MissingField():
     return Return(MISSING_FIELD_CODE, MISSING_FIELD_MESSAGE)
 
-def CaughtException():
+def CaughtException(ex):
     return Return(EXCEPTION_CODE, EXCEPTION_MESSAGE)
 
 def SocketError():
@@ -59,4 +59,4 @@ def Return(code, message):
     jsonMsg["result"] = "error"
     jsonMsg["code"] = code
     jsonMsg["message"] = message
-    return json.dumps(jsonMsg)
+    return jsonMsg

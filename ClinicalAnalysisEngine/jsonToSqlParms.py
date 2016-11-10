@@ -5,7 +5,7 @@ import jsonOpConverter
 import error_message
 import standards
 import json
-
+import sys, os
 #####
 ##### Json To Sql Parms
 #####
@@ -55,16 +55,22 @@ def ParseJsonBranch(jsonBranch, lastOperator):
         elif(type(jsonBranch) == type(list())):
             sqlPiece = "("
             for i in range(0, len(jsonBranch)):
-                sqlPiece += ParseJsonBranch(jsonBranch[i], lastOperator)
-                if(i < len(jsonBranch)-1):
-                    sqlPiece += " " + str(lastOperator) + " "
+                parsed = ParseJsonBranch(jsonBranch[i], lastOperator)
+                if(type(parsed) == type(dict())):
+                    return parsed
+                else:
+                    sqlPiece += parsed
+                    if(i < len(jsonBranch)-1):
+                        sqlPiece += " " + str(lastOperator) + " "
 
 
             sqlPiece += ")"
             return sqlPiece
 
     except Exception as e:
-        print(">>ERROR2: " + str(e) + "\n")
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
         return None
 
 
@@ -73,6 +79,10 @@ def JsonToSqlParm(jsonLeaf):
     try:
         for field, jsonKeyVal in jsonLeaf.items():
             for operator, value in jsonKeyVal.items():
-                return str(field) + " " + jsonOpConverter.Convert(operator) + " " + str(value)
+                op = jsonOpConverter.Convert(operator)
+                if(type(op) == type(dict())):
+                    return op
+                else:
+                    return str(field) + " " + jsonOpConverter.Convert(operator) + " " + str(value)
     except Exception as e:
         print(">>ERROR3: " + str(e) + "\n")

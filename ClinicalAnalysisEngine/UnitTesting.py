@@ -94,5 +94,22 @@ class TestStringMethods(unittest.TestCase):
         sql = jsonToSqlParms.JsonToSqlParms(json)
         self.assertEqual(sql, '((age = 5 or (height < 50 and weight > 500 and age = 100 and (butts = 1 or diabetes != true or (dob = 1998 and dod = 1999 and tail != false and color = orange)))))')
 
+    def test_jsonToSqlParms_gte(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{"age":{"gte":5}}]}'
+        sql = jsonToSqlParms.JsonToSqlParms(json)
+        self.assertEqual(sql, '(age >= 5)')
+
+    def test_jsonToSqlParms_lte(self):
+        json = '{"operation": "operation-here", "animals": "animal-here", "field": [{"age":{"lte":5}}]}'
+        sql = jsonToSqlParms.JsonToSqlParms(json)
+        self.assertEqual(sql, '(age <= 5)')
+
+    def test_invalid_operation(self):
+        json_string = '{"operation": "operation-here", "animals": "animal-here", "field": [{"age":{"ltee":5}}]}'
+        data = jsonToSqlParms.JsonToSqlParms(json_string)
+        self.assertEqual(data['code'], 'ERROR_02')
+
+
+
 if __name__ == '__main__':
     unittest.main()

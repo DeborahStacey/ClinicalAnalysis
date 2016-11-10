@@ -1,6 +1,8 @@
 ## jsonOpConverter.py
 # Primary Owner: Andrew Downie
 
+import standards
+
 def Convert(operation):
     try:
         if(operation == "lt"):
@@ -15,6 +17,6 @@ def Convert(operation):
             return "<="
         elif (operation == "gte"):
             return ">="
-        return "Error4: Invalid Operator"
+        return standards.InvalidOperation()
     except Exception as e:
-        print(">>ERROR5: " + str(e) + "\n")
+        print(standards.CaughtException(str(e)))
