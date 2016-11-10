@@ -5,7 +5,7 @@ import jsonOpConverter
 import error_message
 import standards
 import json
-import sys, os
+
 #####
 ##### Json To Sql Parms
 #####
@@ -68,9 +68,7 @@ def ParseJsonBranch(jsonBranch, lastOperator):
             return sqlPiece
 
     except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)
+        print(">>ERROR2: " + str(e) + "\n")
         return None
 
 
