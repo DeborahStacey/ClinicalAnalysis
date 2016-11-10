@@ -8,7 +8,7 @@ import json
 import sys
 import os
 
-testFolder = "adhocTests"
+testFolder = "Adhoctests"
 
 
 
