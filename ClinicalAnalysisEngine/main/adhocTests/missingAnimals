@@ -1,8 +1,0 @@
-{
-	"operation": "lookup",
-	"field": {
-		"age": {
-			"gt": 5
-		}
-	}
-}
