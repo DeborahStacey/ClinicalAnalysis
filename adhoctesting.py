@@ -31,8 +31,10 @@ host, port, testName = parseCLA.HostPortData("Testname")
 if(testName == ""):
     print("\nYou must select a test, valid testnames are:")
 
-    for filename in os.listdir(testFolder):
-        print("\t" +filename)
+    for path, subdirs, files in os.walk(testFolder):
+        subPath = "/".join(path.split("/")[1:])
+        for name in files:
+            print("\t" + os.path.join(subPath, name))
 
     print("\nExiting...\n")
     quit()

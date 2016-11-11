@@ -2,8 +2,9 @@
 	"operation": "lookup",
 	"animals": "cat",
 	"field": {
-		"age": {
-			"gt": 5
+		"length": {
+			"gt":
+			 10
 		}
 	}
 }
