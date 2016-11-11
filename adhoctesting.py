@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 ## adHocTesting.py
 # Primary Owner: Andrew Downie
 
-from cautils import checkPythonVersion
-from cautils import socketRequest
-from cautils import parseCLA
+from ClinicalAnalysisEngine.cautils import checkPythonVersion
+from ClinicalAnalysisEngine.cautils import socketRequest
+from ClinicalAnalysisEngine.cautils import parseCLA
 import json
 import sys
 import os

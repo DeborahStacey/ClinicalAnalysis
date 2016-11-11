@@ -2,7 +2,7 @@
 ## stopMain.py
 # Primary Owner: Andrew Downie
 
-from cautils import checkPythonVersion
+from ClinicalAnalysisEngine.cautils import checkPythonVersion
 import sys
 
 
@@ -23,9 +23,9 @@ checkPythonVersion.ConfirmPythonVersion3()
 ###                    (that way we can kill the main.py script running local to this folder, but leave the other main.py's running on the same computer but on other ports)
 pid = -1
 
-absPathPidPortFile = abspath(join(dirname(__file__), pidportfile))
 
-if os.path.isfile(absPathPidPortFile):
+
+if os.path.isfile(pidportfile):
     with open(pidportfile) as f:
         for line in f:
             processPID = line.split(",")[0]
