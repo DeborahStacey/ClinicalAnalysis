@@ -10,7 +10,7 @@ def get_con():
     return psycopg2.connect(
         "dbname='WelcatWorking'\
         user='welcatreaders'\
-        host='welcat-working.cz3evk2oqbiz.us-west-2.rds.amazonaws.com'\
+        host='http://cat.ddns.net/'\
         port='5432' \
         password='ThatBackendTho'")
 
