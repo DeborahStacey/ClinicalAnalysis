@@ -4,6 +4,13 @@
 import jsonOpConverter
 import standards
 import json
+import datetime
+from datetime import timedelta
+
+
+
+
+
 
 #####
 ##### Json To Sql Parms
@@ -39,6 +46,15 @@ def JsonToSqlParms(jsonRequest):
     animals = loadedJson['animals']
     fields = loadedJson['field']
 
+    # Custom fields constructed from things already in the db
+    if "age" in fields.keys():
+        old_op = list(fields['age'].keys())[0]
+        age = fields['age'][old_op] * 31557600
+        fields['dateofbirth'] = fields['age']
+        fields['dateofbirth'][old_op] = "'" + str(datetime.datetime.now() - datetime.timedelta(seconds=age)) + "'"
+        del fields['age']
+
+
     sqlParms = ParseJsonBranch(fields, None)
     return sqlParms
 
@@ -48,6 +64,7 @@ def ParseJsonBranch(jsonBranch, lastOperator):
         if(type(jsonBranch) == type(dict())):
             for key, val in jsonBranch.items():
                 if(str(key)[0] == "$"):
+                    print(str(key))
                     return ParseJsonBranch(val, str(key)[1:])
                 else:
                     return JsonToSqlParm(jsonBranch)
