@@ -35,6 +35,7 @@ def AnalysisType(loadedJson, inputParms):
     if type(operation) == type(list()):
         if operation[0] == "lookup":
             query = lookupType(loadedJson, inputParms)
+            return query
     else:
         return "SELECT pet.weight FROM pet"
 
@@ -68,9 +69,12 @@ def lookupType(loadedJson, inputParms):
 
 def lookupPercentage(loadedJson):
 
-    query = ""
+
     if 'group by' in loadedJson:
         groupBy = loadedJson['group by']
 
         if groupBy == "bodyType":
-            query = "SELECT count(*) AS TOTAL, FROM pet WHERE"
+            query = "SELECT count(*), CASE WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 25 THEN 'Low' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 25 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 35 THEN 'Moderate' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 35 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 45 THEN 'High' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 45 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 55 THEN 'Serious' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 55 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 65 THEN 'Severe' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 65 THEN 'Extreme' END AS bodyType FROM pet"
+
+            query = query + " GROUP BY " + groupBy
+            return query
