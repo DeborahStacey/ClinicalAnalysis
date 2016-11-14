@@ -62,19 +62,23 @@ def lookupType(loadedJson, inputParms):
     operation = loadedJson['operation']
 
     if operation[1] == "percentage":
-        query = lookupPercentage(loadedJson)
+        query = lookupPercentage(loadedJson, inputParms)
 
     return query
 
 
-def lookupPercentage(loadedJson):
+def lookupPercentage(loadedJson, inputParms):
 
 
     if 'group by' in loadedJson:
         groupBy = loadedJson['group by']
 
+        equation = "((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height)"
+
         if groupBy == "bodyType":
-            query = "SELECT count(*), CASE WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 25 THEN 'Low' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 25 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 35 THEN 'Moderate' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 35 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 45 THEN 'High' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 45 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 55 THEN 'Serious' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 55 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 65 THEN 'Severe' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 65 THEN 'Extreme' END AS bodyType FROM pet"
+            query = "SELECT count(*), CASE WHEN " + equation + " <= 25 THEN 'Low' WHEN " + equation + " > 25 AND " + equation + " <= 35 THEN 'Moderate' WHEN " + equation + " > 35 AND " + equation + " <= 45 THEN 'High' WHEN " + equation + " > 45 AND " + equation + " <= 55 THEN 'Serious' WHEN " + equation + " > 55 AND " + equation + " <= 65 THEN 'Severe' WHEN  " + equation + " > 65 THEN 'Extreme' END AS bodyType FROM pet"
+
+            query = query + " WHERE " + inputParms
 
             query = query + " GROUP BY " + groupBy
             return query
