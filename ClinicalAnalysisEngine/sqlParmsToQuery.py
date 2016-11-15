@@ -69,7 +69,6 @@ def lookupType(loadedJson, inputParms):
 
 def lookupPercentage(loadedJson, inputParms):
 
-
     if 'group by' in loadedJson:
         groupBy = loadedJson['group by']
 

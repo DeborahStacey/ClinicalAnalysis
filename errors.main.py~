@@ -1,0 +1,127 @@
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+TypeError: argument 1 must be a string or unicode object
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+TypeError: argument 1 must be a string or unicode object
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+TypeError: argument 1 must be a string or unicode object
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 9, in <module>
+    import processRequest
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 4, in <module>
+    import sqlParmsToQuery
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 89
+    SELECT Site, DataSource,
+    ^
+IndentationError: unexpected indent
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 9, in <module>
+    import processRequest
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 4, in <module>
+    import sqlParmsToQuery
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 89
+    SELECT Site, DataSource,
+    ^
+IndentationError: unexpected indent
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 9, in <module>
+    import processRequest
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 4, in <module>
+    import sqlParmsToQuery
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 89
+    SELECT Site, DataSource,
+    ^
+IndentationError: unexpected indent
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 9, in <module>
+    import processRequest
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 4, in <module>
+    import sqlParmsToQuery
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 89
+    SELECT Site, DataSource,
+    ^
+IndentationError: unexpected indent
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+psycopg2.ProgrammingError: syntax error at or near "FROM"
+LINE 1: ...2) - height)/0.9156 ) - height) > 65 THEN 'Extreme' FROM pet
+                                                               ^
+
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+psycopg2.ProgrammingError: column "width" does not exist
+LINE 1: SELECT CASE WHEN ((((width/0.7062) - height)/0.9156 ) - heig...
+                             ^
+
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 15, in ProcessRequest
+    sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms, dataInput)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 19, in sqlParmsToQuery
+    query = AnalysisType(loadedJson, inputParms)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 37, in AnalysisType
+    query = lookupType(loadedJson, inputParms)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sqlParmsToQuery.py", line 66, in lookupType
+    query = query + " WHERE " + inputParms
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+psycopg2.ProgrammingError: can't execute an empty query
+Traceback (most recent call last):
+  File "ClinicalAnalysisEngine/main.py", line 60, in <module>
+    completedRequest = processRequest.ProcessRequest(data)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/processRequest.py", line 17, in ProcessRequest
+    sql_data = sql_utils.get_dict(sqlQuery)
+  File "/home/colehoffele/Documents/CIS4250/ClinicalAnalysis/ClinicalAnalysisEngine/sql_utils.py", line 25, in get_dict
+    cur.execute(query)
+  File "/usr/lib/python3/dist-packages/psycopg2/extras.py", line 222, in execute
+    return _cursor.execute(self, query, vars)
+psycopg2.ProgrammingError: column "width" does not exist
+LINE 1: SELECT CASE WHEN ((((width/0.7062) - height)/0.9156 ) - heig...
+                             ^
+
