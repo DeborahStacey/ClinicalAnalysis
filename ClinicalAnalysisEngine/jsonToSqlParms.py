@@ -4,6 +4,8 @@
 import jsonOpConverter
 import standards
 import json
+import time
+import calendar
 import datetime
 from datetime import timedelta
 
@@ -50,8 +52,10 @@ def JsonToSqlParms(jsonRequest):
     if "age" in fields.keys():
         old_op = list(fields['age'].keys())[0]
         age = fields['age'][old_op] * 31557600
-        fields['dateofbirth'] = fields['age']
-        fields['dateofbirth'][old_op] = "'" + str(datetime.datetime.now() - datetime.timedelta(seconds=age)) + "'"
+        dob = "cast(extract(epoch from dateofbirth) as integer)"
+        fields[dob] = fields['age']
+        del fields[dob][old_op]
+        fields[dob][jsonOpConverter.negate(old_op)] = calendar.timegm(time.gmtime()) - age
         del fields['age']
 
 
