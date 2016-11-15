@@ -3,7 +3,7 @@
 # Primary Owner: Andrew Downie
 
 from ClinicalAnalysisEngine.cautils import checkPythonVersion
-import subprocess 
+import subprocess
 import sys
 
 from os.path import abspath, dirname, join
@@ -33,8 +33,8 @@ checkPythonVersion.ConfirmPythonVersion3()
 
 
 ###
-### Get the pid of the last run 
-###                   
+### Get the pid of the last run
+###
 pid = 0 
 
 if os.path.isfile(pidportfile):
