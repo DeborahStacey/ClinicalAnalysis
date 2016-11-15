@@ -63,7 +63,8 @@ def lookupType(loadedJson, inputParms):
 
     if operation[1] == "percentage":
         query = lookupPercentage(loadedJson, inputParms)
-
+    elif operation[1] == "average":
+        query = lookupAverage(loadedJson, inputParms)
     return query
 
 
@@ -83,6 +84,18 @@ def lookupPercentage(loadedJson, inputParms):
 
             return query
 
+def lookupAverage(loadedJson, inputParms):
+    if loadedJson['operation'][2] != '':
+
+        averaged = "AVG(" + loadedJson['operation'][2] + ") as avg_" + loadedJson['operation'][2]
+        groupBy = loadedJson['group by']
+
+        query = "SELECT " + groupBy + ", " + averaged + "  FROM pet"
+
+        query = query + " WHERE " + inputParms
+
+        query = query + " GROUP BY " + groupBy
+        return query
 
 
 #
