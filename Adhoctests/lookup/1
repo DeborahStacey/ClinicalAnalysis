@@ -1,0 +1,11 @@
+{
+	"operation": ["lookup","percentage"],
+	"group by" : "bodyType",
+	"animals": "cat",
+	"field": {
+		"length": {
+			"gt":
+			 10
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"operation": ["lookup","percentage"],
+	"group by" : "weight",
+	"animals": "cat",
+	"field": {
+		"length": {
+			"gt":
+			 10
+		}
+	}
+}

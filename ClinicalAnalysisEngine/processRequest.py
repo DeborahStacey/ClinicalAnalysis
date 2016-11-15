@@ -12,8 +12,7 @@ def ProcessRequest(dataInput):
 
     sqlParms = jsonToSqlParms.JsonToSqlParms(dataInput)
 
-    sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms)
-
+    sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms, dataInput)
 
     sql_data = sql_utils.get_dict(sqlQuery)
     cats = Cat.sql_data_to_cats(sql_data)

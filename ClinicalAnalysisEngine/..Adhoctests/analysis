@@ -1,0 +1,19 @@
+{
+  ""
+	"operation":  [“correlation”, “percent”]
+	"animals": "cat",
+	"field": {
+		"length": {
+			"gt":
+			 10
+		}
+	}
+}
+
+
+
+{
+“operation”: [“correlation”, “percent”],
+	“Y-axis”:{“diseases” {“eq”: “&hasTapeworms”},
+	“X-axis”: {“&any-category”}, <<-- how to define any category
+}

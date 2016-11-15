@@ -1,0 +1,11 @@
+{
+	"operation": "prediction",
+	"group by" : "length",
+	"animals": "cat",
+	"field": {
+		"length": {
+			"gt":
+			 10
+		}
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"X-axis": "weight",
+	"Y-axis": "height",
+	"X-interval": "auto",
+	"Y-interval": "auto",
+  	"operation": "correlation",
+  	"animals": "cat",
+  	"field": {
+    		"length": {
+      			"gt":
+       			 10
+    		}
+  	}
+}

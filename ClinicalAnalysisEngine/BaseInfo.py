@@ -22,10 +22,8 @@ class BaseInfo(dict):
     reasonfordeath = "unknown"
     lastupdated = 0
     dateadded = 0
+    disease = "unknown"
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-
-
-
