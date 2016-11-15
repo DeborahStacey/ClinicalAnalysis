@@ -75,9 +75,15 @@ def lookupPercentage(loadedJson, inputParms):
         equation = "((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height)"
 
         if groupBy == "bodyType":
-            query = "SELECT count(*), CASE WHEN " + equation + " <= 25 THEN 'Low' WHEN " + equation + " > 25 AND " + equation + " <= 35 THEN 'Moderate' WHEN " + equation + " > 35 AND " + equation + " <= 45 THEN 'High' WHEN " + equation + " > 45 AND " + equation + " <= 55 THEN 'Serious' WHEN " + equation + " > 55 AND " + equation + " <= 65 THEN 'Severe' WHEN  " + equation + " > 65 THEN 'Extreme' END AS bodyType FROM pet"
+            query = "SELECT (CAST((((count(*) *1.0) / ( SELECT (COUNT(*) * 1.0) FROM pet )) *100) AS DECIMAL(10,2))) as percentage, count(*) as Count, CASE WHEN " + equation + " <= 25 THEN 'Low' WHEN " + equation + " > 25 AND " + equation + " <= 35 THEN 'Moderate' WHEN " + equation + " > 35 AND " + equation + " <= 45 THEN 'High' WHEN " + equation + " > 45 AND " + equation + " <= 55 THEN 'Serious' WHEN " + equation + " > 55 AND " + equation + " <= 65 THEN 'Severe' WHEN  " + equation + " > 65 THEN 'Extreme' END AS bodyType FROM pet"
 
             query = query + " WHERE " + inputParms
 
             query = query + " GROUP BY " + groupBy
+
             return query
+
+
+
+#
+#SELECT CAST(field1 AS DECIMAL(10,2)) field1
