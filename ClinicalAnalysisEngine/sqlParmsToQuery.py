@@ -3,6 +3,7 @@
 
 import json
 import standards
+import prediction
 
 def sqlParmsToQuery(inputParms, dataInput):
 
@@ -24,6 +25,9 @@ def AnalysisType(loadedJson, inputParms):
 
     operation = loadedJson['operation']
 
+    if(str(operation) == "prediction"):
+        query = prediction.Predict(loadedJson, inputParms)
+        return query
     if str(operation) == "correlation":
         if 'X-axis' in loadedJson:
             if 'Y-axis' in loadedJson:
