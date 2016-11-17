@@ -6,7 +6,7 @@ import json
 import sys
 import standards
 import jsonToSqlParms
-import parseCLA
+from cautils import parseCLA
 
 host, port, data = parseCLA.HostPortData()
 sys.argv = [sys.argv[0]]
