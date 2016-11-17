@@ -52,7 +52,9 @@ def correlationType(loadedJson, inputParms):
     if str(yInterval) == "auto":
         yInterval = 5
 
-    query = "SELECT count(*) AS TOTAL,FLOOR(pet." + str(xAxis) + "/" + str(xInterval) + ") AS Interval FROM pet WHERE " + inputParms + " GROUP BY Interval ORDER BY Interval"
+    query = "SELECT count(*) AS TOTAL,FLOOR(pet." + str(xAxis) + "/" + str(xInterval) + ") AS Interval FROM pet"
+    query = buildQuery(query, inputParms, "Interval", "Interval")
+
     return query
 
 
@@ -78,9 +80,7 @@ def lookupPercentage(loadedJson, inputParms):
         if groupBy == "bodyType":
             query = "SELECT (CAST((((count(*) *1.0) / ( SELECT (COUNT(*) * 1.0) FROM pet )) *100) AS DECIMAL(10,2))) as percentage, count(*) as Count, CASE WHEN " + equation + " <= 25 THEN 'Low' WHEN " + equation + " > 25 AND " + equation + " <= 35 THEN 'Moderate' WHEN " + equation + " > 35 AND " + equation + " <= 45 THEN 'High' WHEN " + equation + " > 45 AND " + equation + " <= 55 THEN 'Serious' WHEN " + equation + " > 55 AND " + equation + " <= 65 THEN 'Severe' WHEN  " + equation + " > 65 THEN 'Extreme' END AS bodyType FROM pet"
 
-            query = query + " WHERE " + inputParms
-
-            query = query + " GROUP BY " + groupBy
+            query = buildQuery(query, inputParms, groupBy, None)
 
             return query
 
@@ -92,10 +92,37 @@ def lookupAverage(loadedJson, inputParms):
 
         query = "SELECT " + groupBy + ", " + averaged + "  FROM pet"
 
-        query = query + " WHERE " + inputParms
-
-        query = query + " GROUP BY " + groupBy
+        query = buildQuery(query, inputParms, groupBy, None)
         return query
+
+#Use this function after you build the "SELECT" part of the query, and nothing else.
+def buildQuery(query, inputParms, groupBy, orderBy):
+
+    if query != None:
+        if inputParms != None:
+            query = whereClause(query,inputParms)
+        if groupBy != None:
+            query = groupByClause(query, groupBy)
+        if orderBy != None:
+            query = orderByClause(query, orderBy)
+    else:
+        print("Query not valid")
+
+    return query
+
+
+def groupByClause (query, groupBy):
+    return query + " GROUP BY " + groupBy
+
+def whereClause (query, inputParms):
+    return query + " WHERE " + inputParms
+
+def orderByClause (query, orderBy):
+    return query + " ORDER BY " + orderBy
+
+
+
+
 
 
 #
