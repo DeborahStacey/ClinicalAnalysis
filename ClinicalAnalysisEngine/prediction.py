@@ -9,8 +9,6 @@ def Predict(loadedJson, inputParms):
 
     sql_data = sql_utils.get_dict("SELECT * FROM pet WHERE petid = " + str(id))
 
-    #print(sql_data[0])
-
     gender = str(sql_data[0]['gender'])
     weigth = str(sql_data[0]['weight'])
     breed = str(sql_data[0]['breed'])
@@ -36,7 +34,5 @@ def Predict(loadedJson, inputParms):
     # get average age of death for similar cats
 
     # get common diseases for similar cats
-
-
 
     return "SELECT * FROM pet"

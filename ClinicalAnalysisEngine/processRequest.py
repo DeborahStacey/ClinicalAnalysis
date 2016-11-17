@@ -3,6 +3,7 @@
 import jsonToSqlParms
 import sqlParmsToQuery
 import Cat
+import json
 import sql_utils
 
 #####
@@ -11,6 +12,8 @@ import sql_utils
 def ProcessRequest(dataInput):
 
     sqlParms = jsonToSqlParms.JsonToSqlParms(dataInput)
+    if(type(sqlParms) == type(dict())): # if an error json is returned
+        return json.dumps(sqlParms)
 
     sqlQuery = sqlParmsToQuery.sqlParmsToQuery(sqlParms, dataInput)
 
