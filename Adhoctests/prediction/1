@@ -3,9 +3,6 @@
 	"group by" : "length",
 	"animals": "cat",
 	"field": {
-		"length": {
-			"gt":
-			 10
-		}
+		"id": 1
 	}
 }
