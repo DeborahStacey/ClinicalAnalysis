@@ -20,3 +20,14 @@ def Convert(operation):
         return standards.InvalidOperation()
     except Exception as e:
         print(standards.CaughtException(str(e)))
+
+def negate(operation):
+    op_dict = dict()
+    op_dict['lt'] = 'gte'
+    op_dict['gt'] = 'lte'
+    op_dict['gte'] = 'lt'
+    op_dict['lte'] = 'gt'
+    op_dict['eq'] = 'ne'
+    op_dict['ne'] = 'eq'
+    return op_dict[operation]
+

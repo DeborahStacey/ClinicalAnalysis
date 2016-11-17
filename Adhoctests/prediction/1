@@ -1,0 +1,8 @@
+{
+	"operation": "prediction",
+	"group by" : "length",
+	"animals": "cat",
+	"field": {
+		"id": 1
+	}
+}
