@@ -41,7 +41,7 @@ def AnalysisType(loadedJson, inputParms):
             query = lookupType(loadedJson, inputParms)
             return query
     else:
-        return "SELECT pet.weight FROM pet"
+        return "SELECT * FROM pet"
 
 
 
