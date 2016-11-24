@@ -68,7 +68,6 @@ def ParseJsonBranch(jsonBranch, lastOperator):
         if(type(jsonBranch) == type(dict())):
             for key, val in jsonBranch.items():
                 if(str(key)[0] == "$"):
-                    print(str(key))
                     return ParseJsonBranch(val, str(key)[1:])
                 else:
                     return JsonToSqlParm(jsonBranch)
