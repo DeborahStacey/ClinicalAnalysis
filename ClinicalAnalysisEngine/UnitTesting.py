@@ -4,9 +4,12 @@
 import socket
 import json
 import sys
+import os
 import standards
 import jsonToSqlParms
+import sqlParmsToQuery
 from cautils import parseCLA
+from cautils import socketRequest
 
 host, port, data = parseCLA.HostPortData()
 sys.argv = [sys.argv[0]]
@@ -15,6 +18,7 @@ import unittest
 
 class TestStringMethods(unittest.TestCase):
 
+    maxDiff = None
     # Test incorrect JSON
     def test_formatting(self):
 
@@ -109,7 +113,36 @@ class TestStringMethods(unittest.TestCase):
         data = jsonToSqlParms.JsonToSqlParms(json_string)
         self.assertEqual(data['code'], 'ERROR_02')
 
+    def test_prediction_1(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("",self.ReadFromFile("prediction/1"))
+        self.assertEqual(sql, "SELECT AVG(weight) as weight, AVG(height) as height, AVG(length) as length FROM pet WHERE gender = 1 AND breed = 1")
 
+    def test_prediction_2(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("",self.ReadFromFile("prediction/2"))
+        self.assertEqual(sql, "SELECT DATE_PART('day', dateofdeath::timestamp - dateofbirth::timestamp) FROM pet WHERE gender = 1 AND breed = 1 AND dateofdeath IS NOT NULL AND height > 4.864 AND height < 5.376  AND weight > 11.969999999999999 AND weight < 13.23  AND length > 12.882 AND length < 14.238000000000001 ")
+
+    def test_prediction_3(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("",self.ReadFromFile("prediction/3"))
+        self.assertEqual(sql, "SELECT LEAST((weight/100 + (DATE_PART('year', CURRENT_TIMESTAMP - dateofbirth::timestamp) / 20)), 100) as SicknessPredictor FROM pet WHERE petid = 1")
+
+    def test_correlation_1(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("",self.ReadFromFile("correlation/1"))
+        self.assertEqual(sql, "SELECT count(*) AS TOTAL,FLOOR(pet.weight/5) AS Interval FROM pet WHERE  GROUP BY Interval ORDER BY Interval")
+
+    def test_lookup_1(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("", self.ReadFromFile("lookup/1"))
+        self.assertEqual(sql, "SELECT (CAST((((count(*) *1.0) / ( SELECT (COUNT(*) * 1.0) FROM pet )) *100) AS DECIMAL(10,2))) as percentage, count(*) as Count, CASE WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 25 THEN 'Low' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 25 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 35 THEN 'Moderate' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 35 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 45 THEN 'High' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 45 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 55 THEN 'Serious' WHEN ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 55 AND ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) <= 65 THEN 'Severe' WHEN  ((((pet.length/0.7062) - pet.height)/0.9156 ) - pet.height) > 65 THEN 'Extreme' END AS bodyType FROM pet WHERE  GROUP BY bodyType")
+
+    def test_lookup_2(self):
+        sql = sqlParmsToQuery.sqlParmsToQuery("",self.ReadFromFile("lookup/2"))
+        self.assertEqual(sql, "SELECT length, AVG(weight) as avg_weight  FROM pet WHERE  GROUP BY length")
+
+    def ReadFromFile(self, filename):
+        testFilePath = os.path.join("../Adhoctests", filename)
+        testFile = open(testFilePath, "r")
+        testJson = testFile.read()
+        testFile.close()
+        return testJson
 
 if __name__ == '__main__':
     unittest.main()

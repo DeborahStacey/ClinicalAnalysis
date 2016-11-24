@@ -25,9 +25,6 @@ def AnalysisType(loadedJson, inputParms):
 
     operation = loadedJson['operation']
 
-    if(str(operation) == "prediction"):
-        query = prediction.Predict(loadedJson, inputParms)
-        return query
     if str(operation) == "correlation":
         if 'X-axis' in loadedJson:
             if 'Y-axis' in loadedJson:
@@ -39,6 +36,9 @@ def AnalysisType(loadedJson, inputParms):
     if type(operation) == type(list()):
         if operation[0] == "lookup":
             query = lookupType(loadedJson, inputParms)
+            return query
+        if(operation[0] == "prediction"):
+            query = prediction.Predict(loadedJson, inputParms)
             return query
     else:
         return "SELECT * FROM pet"
