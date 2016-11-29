@@ -17,17 +17,28 @@ def Predict(loadedJson, inputParms):
 
     if(query=="physical"):
         return PredictPhysicalCharacteristics(gender, breed)
-    if(query=="lifespan"):
+    else if(query=="lifespan"):
         return PredictLifespan(gender,breed,weight,height,length)
-    if(query=="sickness"):
+    else if(query=="sickness"):
         return PredictSickness(id)
-    if(query=="disease"):
+    else if(query=="disease"):
         return PredictDiseases()
-
-    return "SELECT * FROM pet"
+    else if(query=="reasonfordeath"):
+        return PredictCauseOfDeath()
+    else:
+        return "SELECT * FROM pet"
 
 def PredictDiseases():
     return "SELECT * FROM pet"
+
+def PredictCauseOfDeath():
+    return ("SELECT reasonfordeath, COUNT(*)"
+        " FROM pet WHERE gender = " + gender +
+        " AND breed = " + breed + " AND dateofdeath IS NOT NULL" +
+        " AND " + SimilarHeights(height) +
+        " AND " + SimilarWeights(weight) +
+        " AND " + SimilarLengths(length) +
+        " GROUP BY reasonfordeath")
 
 def PredictPhysicalCharacteristics(gender, breed):
     # Find average weight, height and length
