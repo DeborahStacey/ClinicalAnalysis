@@ -5,6 +5,7 @@ import json
 import standards
 import prediction
 import statistics
+import jsonToSqlParms
 
 stat_op = {"mean":statistics.mean, "median":statistics.median, "mode":statistics.mode, "stdev":statistics.stdev, "variance":statistics.variance}
 
@@ -28,7 +29,9 @@ def AnalysisType(loadedJson, inputParms):
 
     operation = loadedJson['operation']
 
-    if str(operation) == "correlation":
+    if type(operation) == str and operation == 'lookup':
+        return ["SELECT * FROM pet WHERE " + inputParms]
+    elif str(operation) == "correlation":
         if 'X-axis' in loadedJson:
             if 'Y-axis' in loadedJson:
                 if 'X-interval' in loadedJson:
