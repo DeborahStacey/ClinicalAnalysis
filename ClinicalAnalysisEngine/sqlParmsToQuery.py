@@ -4,6 +4,9 @@
 import json
 import standards
 import prediction
+import statistics
+
+stat_op = {"mean":statistics.mean, "median":statistics.median, "mode":statistics.mode, "stdev":statistics.stdev, "variance":statistics.variance}
 
 def sqlParmsToQuery(inputParms, dataInput):
 
@@ -31,7 +34,7 @@ def AnalysisType(loadedJson, inputParms):
                 if 'X-interval' in loadedJson:
                     if 'Y-interval' in loadedJson:
                         query = correlationType(loadedJson, inputParms)
-                        return query
+                        return [query]
 
     if type(operation) == type(list()):
         if operation[0] == "lookup":
@@ -41,7 +44,7 @@ def AnalysisType(loadedJson, inputParms):
             query = prediction.Predict(loadedJson, inputParms)
             return query
     else:
-        return "SELECT * FROM pet"
+        return ["SELECT * FROM pet"]
 
 
 
@@ -66,11 +69,15 @@ def correlationType(loadedJson, inputParms):
 def lookupType(loadedJson, inputParms):
 
     operation = loadedJson['operation']
-
+    query = []
     if operation[1] == "percentage":
-        query = lookupPercentage(loadedJson, inputParms)
+        query.append(lookupPercentage(loadedJson, inputParms))
     elif operation[1] == "average":
-        query = lookupAverage(loadedJson, inputParms)
+        query.append(lookupAverage(loadedJson, inputParms))
+    elif operation[1] in stat_op.keys():
+        query.append("SELECT * FROM pet")
+        query.append(stat_op[operation[1]])
+        query.append(list(loadedJson['field'].keys())[0])
     return query
 
 
