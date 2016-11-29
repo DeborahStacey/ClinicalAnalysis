@@ -49,7 +49,7 @@ def JsonToSqlParms(jsonRequest):
     fields = loadedJson['field']
 
     # Custom fields constructed from things already in the db
-    if "age" in fields.keys():
+    if (fields is dict and "age" in fields.keys()):
         old_op = list(fields['age'].keys())[0]
         age = fields['age'][old_op] * 31557600
         dob = "cast(extract(epoch from dateofbirth) as integer)"
