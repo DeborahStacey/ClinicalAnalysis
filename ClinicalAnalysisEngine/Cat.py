@@ -36,6 +36,7 @@ def cats_to_json(cats):
     json = '{"cats": ['
     for cat in cats:
         json += debug + '{' +  cat.json() + '}, '
-    json = json[:-2]
+    if len(cats) > 0:
+        json = json[:-2]
     json += debug + "]}"
     return json

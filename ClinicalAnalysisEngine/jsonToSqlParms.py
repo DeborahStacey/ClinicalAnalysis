@@ -100,6 +100,8 @@ def JsonToSqlParm(jsonLeaf):
                 if(type(op) == type(dict())):
                     return op
                 else:
+                    if type(value) == str:
+                        value = "'" + value + "'" 
                     return str(field) + " " + jsonOpConverter.Convert(operator) + " " + str(value)
     except Exception as e:
         print(">>ERROR3: " + str(e) + "\n")
