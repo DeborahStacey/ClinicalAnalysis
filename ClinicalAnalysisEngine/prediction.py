@@ -16,15 +16,15 @@ def Predict(loadedJson, inputParms):
     length = str(sql_data[0]['length'])
 
     if(query=="physical"):
-        return PredictPhysicalCharacteristics(gender, breed)
+        return [PredictPhysicalCharacteristics(gender, breed)]
     elif(query=="lifespan"):
-        return PredictLifespan(gender,breed,weight,height,length)
+        return [PredictLifespan(gender,breed,weight,height,length)]
     elif(query=="sickness"):
-        return PredictSickness(id)
+        return [PredictSickness(id)]
     elif(query=="disease"):
-        return PredictDiseases()
+        return [PredictDiseases()]
     elif(query=="reasonfordeath"):
-        return PredictCauseOfDeath()
+        return [PredictCauseOfDeath()]
     else:
         return "SELECT * FROM pet"
 
