@@ -51,7 +51,7 @@ while True:
 
 
     try:
-        rawData = conn.recv(1024)
+        rawData = conn.recv(4096)
         if not rawData: continue
 
 
