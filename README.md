@@ -3,7 +3,7 @@
 ## Connecting our client to the cloud / default host
 To connect to the default server with our client, run: `adhoctesting.py`, upon running this command, you will be given a list of tests that can be run. Rerun `adhoctesting.py` with the test of your choice, example: `python3 adhoctesting.py simple/1` will run the simple/1 test.
 
-**NOTE:** there is no longer a server being hosted in the cloud, connecting to the default server ATM will fail. The `parseCLA.py` file will need to have settings changed if a new default host, with a different IP is setup.
+**NOTE:** there is no longer a server being hosted in the cloud, connecting to the default server ATM will fail. The `parseCLA.py` file will need to have settings changed if a new default host, with a different IP is setup. See this projects wiki for details on how to change the default host / port in the `parseCLA.py` file.
 
 ## Specifying a custom host
 To connect to a custom ip with our client, run the command `python3 adhoctesting.py -h <host ip>`,
